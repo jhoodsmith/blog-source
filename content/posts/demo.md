@@ -54,7 +54,7 @@ Add a nice theme as a git sub module (I'm using [Harbor](https://github.com/mats
 
 ```bash
 cd themes/
-git submodule add https://github.com/alexandrevicenzi/harbo.git
+git submodule add https://github.com/alexandrevicenzi/harbor.git
 ```
 
 Copy the configuration from the theme's [page in Hugo Themes](https://themes.gohugo.io/harbor/) into the file `config.toml`.
@@ -65,15 +65,13 @@ Copy the configuration from the theme's [page in Hugo Themes](https://themes.goh
 Start each new Org file in `content-org` with the following snippet:
 
 ```md
-#+hugo_base_dir: ../
-
 #+title: Blog post title
 #+date: YYYY-MM-DD
 #+author: James Hood-Smith
 
+#+hugo_base_dir: ../
 #+hugo_tags: tag1 tag2
 #+hugo_categories: category
-
 #+hugo_draft: true
 ```
 
