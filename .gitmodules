@@ -1,3 +1,3 @@
-[submodule "themes/soho"]
-	path = themes/soho
-	url = https://github.com/alexandrevicenzi/soho.git
+[submodule "themes/harbor"]
+	path = themes/harbor
+	url = https://github.com/matsuyoshi30/harbor.git

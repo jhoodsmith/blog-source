@@ -1,75 +1,71 @@
-baseURL = "https://example.com"
-theme = "soho"
-title = "Soho"
+theme = "harbor"
+baseurl = "https://example.com/"
+title = "Aides-Mémoire"
+paginate = 3
 languageCode = "en"
+DefaultContentLanguage = "en"
 enableInlineShortcodes = true
+footnoteReturnLinkContents = "^"
 
-summarylength = 10
-enableEmoji = true
+# Optional
+# If you use googleAnalytics, you set top-level options in config.toml to the beginning of the config file like other top-level options.
+# googleAnalytics = "UA-XXXXXXXX-XX"
+# and disqus too.
+# disqusShortName = "yourdisqusshortname"
 
-[params]
-author = "Author Name"
-description = "My Blog"
+# [params.goatcounter]
+#   domain="stats.domain.com"
 
-## Set one of:
-gravatar = "soho@example.com"
-# profilePicture = "images/profile.png"
+[Author]
+  name = "James Hood-Smith"
 
-copyright = "Author Name"
-license = "CC BY-SA 4.0"
-licenseURL = "https://creativecommons.org/licenses/by-sa/4.0"
+[outputs]
+  section = ["JSON", "HTML"]
 
-## Set custom theme color.
-# themeColor = "#fc2803"
-
-## Set custom CSS and/or JS to override site defaults.
-customCss = ["css/blog.css"]
-customJs = ["js/blog.js"]
-
-  ## Set as many as you want.
-  [[params.socialIcons]]
-  icon = "fa-linkedin"
-  title = "Linkedin"
-  url = "#"
-
-  [[params.socialIcons]]
-  icon = "fa-github"
-  title = "GitHub"
-  url = "#"
-
-  [[params.socialIcons]]
-  icon = "fa-twitter"
-  title = "Twitter"
-  url = "#"
-
-[menu]
-
-  [[menu.main]]
-  name = "Posts"
-  weight = 100
-  identifier = "posts"
-  url = "/posts/"
-
-  [[menu.main]]
-  name = "About"
+[[params.nav]]
   identifier = "about"
-  weight = 300
+  name = "About"
+  icon = "fas fa-user fa-lg"
   url = "/about/"
+  weight = 3
 
-[taxonomies]
-  category = "categories"
-  series = "series"
-  tag = "tags"
+# [[params.nav]]
+#   identifier = "tags"
+#   name = "Tags"
+#   icon = "fas fa-tag fa-lg"
+#   url = "tags"
+#   weight = 3
 
-[markup]
+# [[params.nav]]
+#   identifier = "categories"
+#   name = "Category"
+#   icon = "fas fa-folder-open fa-lg"
+#   url = "categories"
+#   weight = 3
 
-  [markup.highlight]
-  codeFences = true
-  guessSyntax = false
-  hl_Lines = ""
-  lineNoStart = 1
-  lineNos = false
-  lineNumbersInTable = true
-  noClasses = true # if false, you need to provide you own custom CSS
-  style = "monokai"
-  tabWidth = 4
+# [[params.nav]]
+#   identifier = "search"
+#   name = "Search"
+#   icon = "fas fa-search fa-lg"
+#   url = "search"
+#   weight = 3
+
+# [[params.nav]]
+#   identifier = "archives"
+#   name = "Archives"
+#   icon = "fas fa-archive fa-lg"
+#   url = "archives"
+#   weight = 3
+
+# copy paste this block and change for each social media to add how many ever social media
+# acounts/links you want
+[[params.social]]
+  name="name of social media"
+  url="link to social media"
+  icon="A icon from https://fontawesome.com/"
+
+[params.logo]
+  url = "icon.png" # static/images/icon.png
+  width = 50
+  height = 50
+  alt = "Logo"

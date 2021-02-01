@@ -1,35 +1,81 @@
 +++
-title = "Writing Hugo blog in Org (File Export)"
-author = ["Kaushal Modi"]
-date = 2017-09-10
+title = "Creating a Hugo blog using Org"
+author = ["James Hood-Smith"]
+date = 2021-02-01
 tags = ["hugo", "org"]
 categories = ["emacs"]
 draft = true
 +++
 
-## First heading within the post {#first-heading-within-the-post}
-
--   This post will be exported as
-    `content/posts/writing-hugo-blog-in-org-file-export.md`.
--   Its title will be "Writing Hugo blog in Org".
--   It will have _hugo_ and _org_ tags and _emacs_ as category.
--   The _lastmod_ property in the front-matter is set automatically to
-    the time of export.
--   The menu item _identifier_ is auto-set.
--   The menu item _weight_ and post _weight_ if needed have to be
-    manually specified as shown above.
+In which we setup our working environment for creating blog posts as single page
+Org files.
 
 
-### A sub-heading under that heading {#a-sub-heading-under-that-heading}
+## Installation {#installation}
 
--   It's draft state will be marked as `true` because of `#+hugo_draft:
-      true`.
+Install Hugo:
 
-With the point <span class="underline">anywhere</span>, do `C-c C-e H h` to export this whole file
-titled _Writing Hugo blog in Org_ to a Hugo post.
+```bash
+brew install hugo
+```
 
-The exported Markdown has a little comment footer as set in the _Local
-Variables_ section below.
+Setup Org:
+
+```elisp
+;; Add to init.el
+(use-package ox-hugo)
+```
+
+
+## Setup new blog {#setup-new-blog}
+
+Create new site:
+
+```bash
+hugo new site blog
+```
+
+Add Org directory:
+
+```bash
+cd blog
+mkdir content-org
+```
+
+Configure Org to automatically create markdown files:
+
+```elisp
+;; Save to .dir-locals.el in blog root
+(("content-org/"
+  . ((org-mode . ((eval . (org-hugo-auto-export-mode)))))))
+```
+
+Add a nice theme as a git sub module (I'm using [Harbor](https://github.com/matsuyoshi30/harbor)).
+
+```bash
+cd themes/
+git submodule add https://github.com/alexandrevicenzi/harbo.git
+```
+
+Copy the configuration from the theme's [page in Hugo Themes](https://themes.gohugo.io/harbor/) into the file `config.toml`.
+
+
+## New post template {#new-post-template}
+
+Start each new Org file in `content-org` with the following snippet:
+
+```md
+#+hugo_base_dir: ../
+
+#+title: Blog post title
+#+date: YYYY-MM-DD
+#+author: James Hood-Smith
+
+#+hugo_tags: tag1 tag2
+#+hugo_categories: category
+
+#+hugo_draft: true
+```
 
 [//]: # "Exported with love from a post written in Org mode"
 [//]: # "- https://github.com/kaushalmodi/ox-hugo"
