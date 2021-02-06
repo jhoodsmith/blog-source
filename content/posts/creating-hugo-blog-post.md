@@ -2,7 +2,7 @@
 title = "Hugo blog with Org and GitHub Actions"
 author = ["James Hood-Smith"]
 date = 2021-02-02
-lastmod = 2021-02-06T16:12:47+00:00
+lastmod = 2021-02-06T17:01:56+00:00
 tags = ["hugo", "org"]
 categories = ["emacs"]
 draft = false
@@ -55,7 +55,7 @@ in a single org file.
 
 4.  Add `blog.org` to the root of the blog directory and create your first blog post
 
-    ```markdown
+    ```org
     #+hugo_base_dir: ./
     #+hugo_weight: auto
     #+hugo_auto_set_lastmod: t
@@ -103,7 +103,7 @@ in a single org file.
 
 4.  Update the `baseurl` property in `config.toml` to the URL of the blog.
 
-    ```text
+    ```toml
     baseurl = "https://jhoodsmith.github.io/blog/"
     ```
 
@@ -115,7 +115,7 @@ in a single org file.
 
 7.  Create a new GitHub Actions workflow in `.github/workflows/blog_deploy.yml`
 
-    ```text
+    ```yaml
     name: hugo CI
 
     on:
@@ -150,4 +150,4 @@ in a single org file.
     ```
 
 If all has gone well, then the blog should automatically be deployed to your
-GitHub pages site after your push updates to the `blog-source` repository.
+GitHub pages site each time you push to the `main` branch of `blog-source`.

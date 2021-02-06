@@ -1,9 +1,14 @@
 #+hugo_base_dir: ./
 #+hugo_weight: auto
 #+hugo_auto_set_lastmod: t
-
 #+author: James Hood-Smith
 
+* About
+:PROPERTIES:
+:EXPORT_HUGO_SECTION: /
+:EXPORT_FILE_NAME: about
+:END:
+About me
 * Emacs                                                              :@emacs:
 All posts in here will have the category set to /emacs/.
 ** DONE Hugo blog with Org and GitHub Actions                      :hugo:org:
@@ -11,6 +16,7 @@ All posts in here will have the category set to /emacs/.
 :EXPORT_FILE_NAME: creating-hugo-blog-post
 :EXPORT_DATE: 2021-02-02
 :END:
+
 In which we setup our working environment for creating blog posts as sub-trees
 in a single org file.
 
@@ -46,7 +52,7 @@ in a single org file.
    into the file =config.toml=.
 
 5. Add =blog.org= to the root of the blog directory and create your first blog post
-   #+BEGIN_SRC markdown
+   #+BEGIN_SRC org
      ,#+hugo_base_dir: ./
      ,#+hugo_weight: auto
      ,#+hugo_auto_set_lastmod: t
@@ -90,7 +96,7 @@ in a single org file.
    #+END_SRC
 
 3. Update the =baseurl= property in =config.toml= to the URL of the blog.
-   #+BEGIN_SRC text
+   #+BEGIN_SRC toml
      baseurl = "https://jhoodsmith.github.io/blog/"
    #+END_SRC
 
@@ -101,7 +107,7 @@ in a single org file.
 5. Store the PAT in the =Secrets= setting of the =blog-source= repository.
 
 7. Create a new GitHub Actions workflow in =.github/workflows/blog_deploy.yml=
-   #+BEGIN_SRC text
+   #+BEGIN_SRC yaml
      name: hugo CI
 
      on:
@@ -137,4 +143,4 @@ in a single org file.
    #+END_SRC
 
 If all has gone well, then the blog should automatically be deployed to your
-GitHub pages site after your push updates to the =blog-source= repository.
+GitHub pages site each time you push to the =main= branch of =blog-source=.
