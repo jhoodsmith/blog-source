@@ -2,7 +2,7 @@
 title = "Hugo blog with Org and GitHub Actions"
 author = ["James Hood-Smith"]
 date = 2021-02-02
-lastmod = 2021-02-06T16:06:27+00:00
+lastmod = 2021-02-06T16:12:47+00:00
 tags = ["hugo", "org"]
 categories = ["emacs"]
 draft = false
@@ -120,7 +120,7 @@ in a single org file.
 
     on:
       push:
-        branches: [ master ]
+        branches: [ main ]
 
     jobs:
       build:

@@ -106,7 +106,7 @@ in a single org file.
 
      on:
        push:
-	 branches: [ master ]
+	 branches: [ main ]
 
      jobs:
        build:
