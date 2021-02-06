@@ -1,5 +1,5 @@
 theme = "harbor"
-baseurl = "https://example.com/"
+baseurl = "https://jhoodsmith.github.io/blog/"
 title = "Aides-Mémoire"
 paginate = 3
 languageCode = "en"

@@ -1,11 +1,11 @@
 +++
-title = "Writing Hugo blog posts in Org"
+title = "Hugo blog with Org and GitHub Actions"
 author = ["James Hood-Smith"]
 date = 2021-02-02
-lastmod = 2021-02-06T09:15:49+00:00
+lastmod = 2021-02-06T16:06:27+00:00
 tags = ["hugo", "org"]
 categories = ["emacs"]
-draft = true
+draft = false
 weight = 2001
 +++
 
@@ -76,12 +76,15 @@ in a single org file.
     ```
 
 
-## Deploy to GitHub pages {#deploy-to-github-pages}
+## Automatic deployment to GitHub pages {#automatic-deployment-to-github-pages}
 
 1.  Go to GitHub and create a repository for the source code and a repository for
-    the deployed site. In my case the repositories are `blog-source` and `blog`
+    the deployed site. In my case the repositories are `blog-source` and `blog`.
 
-2.  Add a basic `.gitignore` file to the blog directory root
+2.  In the 'GitHub Pages' section of the settings page of the `blog` repository,
+    set the source to the `main` branch.
+
+3.  Add a basic `.gitignore` file to the blog directory root
 
     ```text
     # Hugo default output directory
@@ -98,4 +101,53 @@ in a single org file.
     .DS_Store
     ```
 
-3.  Update the `baseurl` property in `config.toml` to the name of
+4.  Update the `baseurl` property in `config.toml` to the URL of the blog.
+
+    ```text
+    baseurl = "https://jhoodsmith.github.io/blog/"
+    ```
+
+5.  In your account settings in GitHub, create a new personal access token (PAT)
+    with read and write access to your repositories. (Skip this step if you
+    already have a suitable PAT).
+
+6.  Store the PAT in the `Secrets` setting of the `blog-source` repository.
+
+7.  Create a new GitHub Actions workflow in `.github/workflows/blog_deploy.yml`
+
+    ```text
+    name: hugo CI
+
+    on:
+      push:
+        branches: [ master ]
+
+    jobs:
+      build:
+        runs-on: ubuntu-latest
+
+        steps:
+    ​      - uses: actions/checkout@v2
+       with:
+         submodules: true
+         fetch-depth: 1
+
+          - name: Setup Hugo
+       uses: peaceiris/actions-hugo@v2
+       with:
+         hugo-version: 'latest'
+
+          - name: Build
+       run: hugo
+
+          - name: Deploy
+       uses: peaceiris/actions-gh-pages@v3
+       with:
+         personal_token: ${{ secrets.PERSONAL_TOKEN }}
+         external_repository: jhoodsmith/blog
+         publish_branch: main
+         publish_dir: ./public
+    ```
+
+If all has gone well, then the blog should automatically be deployed to your
+GitHub pages site after your push updates to the `blog-source` repository.
