@@ -1,0 +1,89 @@
+#+hugo_base_dir: ./
+#+hugo_weight: auto
+#+hugo_auto_set_lastmod: t
+
+#+author: James Hood-Smith
+
+* Emacs                                                              :@emacs:
+All posts in here will have the category set to /emacs/.
+** TODO Writing Hugo blog posts in Org                             :hugo:org:
+:PROPERTIES:
+:EXPORT_FILE_NAME: creating-hugo-blog-post
+:EXPORT_DATE: 2021-02-02
+:END:
+In which we setup our working environment for creating blog posts as sub-trees
+in a single org file.
+
+*** Installation
+1. Install Hugo:
+   #+BEGIN_SRC bash
+   brew install hugo
+   #+END_SRC
+
+2. Setup Org: Add the following line to =init.el=.
+   #+BEGIN_SRC elisp
+   (use-package ox-hugo)
+   #+END_SRC
+
+*** Setup blog with first post
+1. Create new site:
+   #+BEGIN_SRC bash
+     hugo new site blog
+   #+END_SRC
+
+2. Configure Emacs to automatically create markdown files after saving the org source:
+   Add the following to the file =.dir-locals.el= in blog root
+   #+BEGIN_SRC elisp
+     ((org-mode . ((eval . (org-hugo-auto-export-mode)))))
+   #+END_SRC
+
+4. Add a nice theme as a git sub-module (I'm using [[https://github.com/matsuyoshi30/harbor][Harbor]]).
+   #+BEGIN_SRC bash
+     cd themes/
+     git submodule add https://github.com/alexandrevicenzi/harbor.git
+   #+END_SRC
+   To get started copy the configuration from the theme's [[https://themes.gohugo.io/harbor/][page in Hugo Themes]]
+   into the file =config.toml=.
+
+5. Add =blog.org= to the root of the blog directory and create your first blog post
+   #+BEGIN_SRC markdown
+     ,#+hugo_base_dir: ./
+     ,#+hugo_weight: auto
+     ,#+hugo_auto_set_lastmod: t
+     ,#+author: James Hood-Smith
+
+     ,* Emacs                                                              :@emacs:
+     All posts in here will have the category set to /emacs/.
+     ,** TODO Writing Hugo blog posts in Org                             :hugo:org:
+     :PROPERTIES:
+     :EXPORT_FILE_NAME: creating-hugo-blog-post
+     :EXPORT_DATE: 2021-02-02
+     :END:
+     In which we setup our working environment for creating blog posts as sub-trees
+     in a single org file.
+
+     ,*** Installation
+     ...
+   #+END_SRC
+
+*** Deploy to GitHub pages
+1. Go to GitHub and create a repository for the source code and a repository for
+   the deployed site. In my case the repositories are =blog-source= and =blog=
+
+2. Add a basic =.gitignore= file to the blog directory root
+   #+BEGIN_SRC text
+     # Hugo default output directory
+     /public
+
+     ## OS Files
+     # Windows
+     Thumbs.db
+     ehthumbs.db
+     Desktop.ini
+     $RECYCLE.BIN/
+
+     # OSX
+     .DS_Store
+   #+END_SRC
+
+3. Update the =baseurl= property in =config.toml= to the name of 
