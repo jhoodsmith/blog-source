@@ -20,18 +20,29 @@ All posts in here will have the category set to /emacs/.
 In which we setup our working environment for creating blog posts as sub-trees
 in a single org file.
 
-*** Installation
+*** Motivation
+Like many dyed-in-the-wool Emacs users, I use Org Mode for much of my writing. I
+want a blog that I can deploy and write posts for in Org with minimum fuss.
+Having started to read Brian P. Hogan's [[https://pragprog.com/titles/bhhugo/build-websites-with-hugo/][book]], I want to give [[https://gohugo.io][Hugo]] a try, and I
+really like [[https://github.com/features/actions][GitHub Actions]].
+
+*** Steps
+
+**** Installation
 1. Install Hugo:
    #+BEGIN_SRC bash
    brew install hugo
    #+END_SRC
 
-2. Setup Org: Add the following line to =init.el=.
+2. Setup [[https://ox-hugo.scripter.co][ox-hugo]], the Org exporter backend that exports Org to Hugo-compatible
+   Markdown.
+
+   In my case, I use [[https://github.com/jwiegley/use-package][use-package]], and so add the following to =init.el=.
    #+BEGIN_SRC elisp
    (use-package ox-hugo)
    #+END_SRC
 
-*** Setup blog with first post
+**** Setup blog with first post
 1. Create new site:
    #+BEGIN_SRC bash
      hugo new site blog
@@ -48,8 +59,8 @@ in a single org file.
      cd themes/
      git submodule add https://github.com/alexandrevicenzi/harbor.git
    #+END_SRC
-   To get started copy the configuration from the theme's [[https://themes.gohugo.io/harbor/][page in Hugo Themes]]
-   into the file =config.toml=.
+   Copy the configuration from the theme's [[https://themes.gohugo.io/harbor/][page in Hugo Themes]] into the file
+   =config.toml=.
 
 5. Add =blog.org= to the root of the blog directory and create your first blog post
    #+BEGIN_SRC org
@@ -72,7 +83,7 @@ in a single org file.
      ...
    #+END_SRC
 
-*** Automatic deployment to GitHub pages
+**** Automatic deployment to GitHub pages
 1. Go to GitHub and create a repository for the source code and a repository for
    the deployed site. In my case the repositories are =blog-source= and =blog=.
 
@@ -104,7 +115,8 @@ in a single org file.
    with read and write access to your repositories. (Skip this step if you
    already have a suitable PAT).
 
-5. Store the PAT in the =Secrets= setting of the =blog-source= repository.
+5. Store the PAT in the =Secrets= setting of the =blog-source= repository with
+   key name =PERSONAL_TOKEN=.
 
 7. Create a new GitHub Actions workflow in =.github/workflows/blog_deploy.yml=
    #+BEGIN_SRC yaml

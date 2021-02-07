@@ -2,7 +2,7 @@
 title = "Hugo blog with Org and GitHub Actions"
 author = ["James Hood-Smith"]
 date = 2021-02-02
-lastmod = 2021-02-06T17:01:56+00:00
+lastmod = 2021-02-07T10:14:51+00:00
 tags = ["hugo", "org"]
 categories = ["emacs"]
 draft = false
@@ -13,7 +13,18 @@ In which we setup our working environment for creating blog posts as sub-trees
 in a single org file.
 
 
-## Installation {#installation}
+## Motivation {#motivation}
+
+Like many dyed-in-the-wool Emacs users, I use Org Mode for much of my writing. I
+want a blog that I can deploy and write posts for in Org with minimum fuss.
+Having started to read Brian P. Hogan's [book](https://pragprog.com/titles/bhhugo/build-websites-with-hugo/), I want to give [Hugo](https://gohugo.io) a try, and I
+really like [GitHub Actions](https://github.com/features/actions).
+
+
+## Steps {#steps}
+
+
+### Installation {#installation}
 
 1.  Install Hugo:
 
@@ -21,14 +32,17 @@ in a single org file.
     brew install hugo
     ```
 
-2.  Setup Org: Add the following line to `init.el`.
+2.  Setup [ox-hugo](https://ox-hugo.scripter.co), the Org exporter backend that exports Org to Hugo-compatible
+    Markdown.
+
+    In my case, I use [use-package](https://github.com/jwiegley/use-package), and so add the following to `init.el`.
 
     ```elisp
     (use-package ox-hugo)
     ```
 
 
-## Setup blog with first post {#setup-blog-with-first-post}
+### Setup blog with first post {#setup-blog-with-first-post}
 
 1.  Create new site:
 
@@ -50,8 +64,8 @@ in a single org file.
     git submodule add https://github.com/alexandrevicenzi/harbor.git
     ```
 
-    To get started copy the configuration from the theme's [page in Hugo Themes](https://themes.gohugo.io/harbor/)
-    into the file `config.toml`.
+    Copy the configuration from the theme's [page in Hugo Themes](https://themes.gohugo.io/harbor/) into the file
+    `config.toml`.
 
 4.  Add `blog.org` to the root of the blog directory and create your first blog post
 
@@ -76,7 +90,7 @@ in a single org file.
     ```
 
 
-## Automatic deployment to GitHub pages {#automatic-deployment-to-github-pages}
+### Automatic deployment to GitHub pages {#automatic-deployment-to-github-pages}
 
 1.  Go to GitHub and create a repository for the source code and a repository for
     the deployed site. In my case the repositories are `blog-source` and `blog`.
@@ -111,7 +125,8 @@ in a single org file.
     with read and write access to your repositories. (Skip this step if you
     already have a suitable PAT).
 
-6.  Store the PAT in the `Secrets` setting of the `blog-source` repository.
+6.  Store the PAT in the `Secrets` setting of the `blog-source` repository with
+    key name `PERSONAL_TOKEN`.
 
 7.  Create a new GitHub Actions workflow in `.github/workflows/blog_deploy.yml`
 
