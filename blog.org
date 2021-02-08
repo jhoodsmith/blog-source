@@ -172,7 +172,7 @@ have automatic deployment with [[https://github.com/features/actions][GitHub Act
 
 If all has gone well, then the blog should automatically be deployed to your
 GitHub pages site each time you push to the =main= branch of =blog-source=.
-** TODO Tweaking a Hugo theme                                      :hugo:org:
+** DONE Tweaking a Hugo theme                                      :hugo:org:
 :PROPERTIES:
 :EXPORT_FILE_NAME: modify-hugo-theme
 :EXPORT_DATE: 2021-02-07
@@ -189,15 +189,21 @@ short, one-or-two sentence summary that sits at the top of each post.
 
 *** Steps
 
-**** Replace front-matter key
-In line with the ox-hugo [[https://ox-hugo.scripter.co/doc/replace-front-matter-keys/][instructions]], we add the following to the top of our Org source:
+**** Overwriting the Hugo .Summary page variable
+The Hugo page variable =.Summary= is used in index pages and contains a
+shortened or summarised version of a post. If not set explicitly, Hugo will
+equate it to the first 70 words of the page content. I have decided to always
+set it explicitly, and I want it inserted at the top of each post (as is
+done on this page you are reading).
+
+I start by adding the following line to the top of my Org source:
 #+BEGIN_SRC markdown
   ,#+hugo_front_matter_key_replace: description>summary
 #+END_SRC
-This ensures that the value of the Hugo =.Summary= variable equates to the Org
-=Descriptio= meta data.
+As explained [[https://ox-hugo.scripter.co/doc/replace-front-matter-keys/][here]], this ensures that the value of the Hugo =.Summary= variable
+is matched to the Org meta data =Description=.
 
-In each post we specify the value of =Description= in its own drawer:
+In my Org source I can then add a  =Description= drawer to each post.
 #+BEGIN_SRC org
   ,** TODO Tweaking a Hugo theme                                      :hugo:org:
   :PROPERTIES:
@@ -213,17 +219,15 @@ In each post we specify the value of =Description= in its own drawer:
   In my [[*Hugo blog with Org and GitHub Actions][last post]] I setup a 
   new Hugo blog ...
 #+END_SRC
-I place this straight after the =PROPERTIES= drawer.
 
-**** Inserting summary above content
-To combine your own site components with those from a theme, it's just a matter
-of creating a file with the same name and directory structure as the file you
-want to replace. In my case, I want to modify part of
-=/themes/harbor/layouts/partials/toc.html=, which is where the theme author
-inserts the page variable =.Content=. Hence, I put a copy of the file at
-=/layouts/partials/toc.html= and modify that.
+**** Modifying theme layout file
+To change an aspect of a Hugo theme, it's just a matter of creating a file with
+the same name and directory structure as the layout file you want to replace. In
+my case, I want to modify part of =/themes/harbor/layouts/partials/toc.html=,
+which is where the theme author inserts the page variable =.Content=. Hence, I
+copy the file to =/layouts/partials/toc.html=.
 
-In the copy of =toc.html= I replace ={{ .Content }}= with the following.
+In the copy of =toc.html=, I then replace ={{ .Content }}= with the following.
 #+BEGIN_SRC html
   {{ if eq .Type "posts" }}
   <div class="summary">
@@ -232,3 +236,6 @@ In the copy of =toc.html= I replace ={{ .Content }}= with the following.
   {{ end }}
   {{ .Content }}
 #+END_SRC
+This ensures that all content files of type "posts" will have their content
+prefaced with the value of =.Summary=. Following the theme author's
+instructions, I have added my custom CSS to =/static/css/custom.css=.
