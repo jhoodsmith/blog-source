@@ -101,10 +101,11 @@ have automatic deployment with [[https://github.com/features/actions][GitHub Act
 
 **** Automatic deployment to GitHub pages
 1. Go to GitHub and create a repository for the source code and a repository for
-   the deployed site. In my case the repositories are =blog-source= and =blog=.
+   the deployed site. In my case the repositories are =blog-source= and
+   =jhoodsmith.github.io=.
 
-2. In the "GitHub Pages" section of the settings page of the =blog= repository,
-   set the source to the =main= branch.
+2. In the "GitHub Pages" section of the settings page of the
+   =jhoodsmith.github.io= repository, set the source to the =main= branch.
 
 2. Add a basic =.gitignore= file to the blog directory root
    #+BEGIN_SRC text
@@ -124,7 +125,7 @@ have automatic deployment with [[https://github.com/features/actions][GitHub Act
 
 3. Update the =baseurl= property in =config.toml= to the URL of the blog.
    #+BEGIN_SRC toml
-     baseurl = "https://jhoodsmith.github.io/blog/"
+     baseurl = "https://jhoodsmith.github.io/"
    #+END_SRC
 
 4. In your account settings in GitHub, create a new personal access token (PAT)
@@ -164,7 +165,7 @@ have automatic deployment with [[https://github.com/features/actions][GitHub Act
 	     uses: peaceiris/actions-gh-pages@v3
 	     with:
 	       personal_token: ${{ secrets.PERSONAL_TOKEN }}
-	       external_repository: jhoodsmith/blog
+	       external_repository: jhoodsmith/jhoodsmith.github.io
 	       publish_branch: main
 	       publish_dir: ./public
 

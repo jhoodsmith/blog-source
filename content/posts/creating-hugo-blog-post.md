@@ -6,7 +6,7 @@ summary = """
   automatic deployment using GitHub Actions.
   """
 date = 2021-02-02
-lastmod = 2021-02-07T21:23:47+00:00
+lastmod = 2021-02-08T23:18:41+00:00
 tags = ["hugo", "org"]
 categories = ["blogging"]
 draft = false
@@ -105,10 +105,11 @@ have automatic deployment with [GitHub Actions](https://github.com/features/acti
 ### Automatic deployment to GitHub pages {#automatic-deployment-to-github-pages}
 
 1.  Go to GitHub and create a repository for the source code and a repository for
-    the deployed site. In my case the repositories are `blog-source` and `blog`.
+    the deployed site. In my case the repositories are `blog-source` and
+    `jhoodsmith.github.io`.
 
-2.  In the "GitHub Pages" section of the settings page of the `blog` repository,
-    set the source to the `main` branch.
+2.  In the "GitHub Pages" section of the settings page of the
+    `jhoodsmith.github.io` repository, set the source to the `main` branch.
 
 3.  Add a basic `.gitignore` file to the blog directory root
 
@@ -130,7 +131,7 @@ have automatic deployment with [GitHub Actions](https://github.com/features/acti
 4.  Update the `baseurl` property in `config.toml` to the URL of the blog.
 
     ```toml
-    baseurl = "https://jhoodsmith.github.io/blog/"
+    baseurl = "https://jhoodsmith.github.io/"
     ```
 
 5.  In your account settings in GitHub, create a new personal access token (PAT)
@@ -171,7 +172,7 @@ have automatic deployment with [GitHub Actions](https://github.com/features/acti
        uses: peaceiris/actions-gh-pages@v3
        with:
          personal_token: ${{ secrets.PERSONAL_TOKEN }}
-         external_repository: jhoodsmith/blog
+         external_repository: jhoodsmith/jhoodsmith.github.io
          publish_branch: main
          publish_dir: ./public
     ```
