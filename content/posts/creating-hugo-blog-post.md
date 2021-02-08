@@ -6,7 +6,7 @@ summary = """
   automatic deployment using GitHub Actions.
   """
 date = 2021-02-02
-lastmod = 2021-02-08T23:18:41+00:00
+lastmod = 2021-02-08T23:32:08+00:00
 tags = ["hugo", "org"]
 categories = ["blogging"]
 draft = false
@@ -108,10 +108,7 @@ have automatic deployment with [GitHub Actions](https://github.com/features/acti
     the deployed site. In my case the repositories are `blog-source` and
     `jhoodsmith.github.io`.
 
-2.  In the "GitHub Pages" section of the settings page of the
-    `jhoodsmith.github.io` repository, set the source to the `main` branch.
-
-3.  Add a basic `.gitignore` file to the blog directory root
+2.  Add a basic `.gitignore` file to the blog directory root
 
     ```text
     # Hugo default output directory
@@ -128,20 +125,20 @@ have automatic deployment with [GitHub Actions](https://github.com/features/acti
     .DS_Store
     ```
 
-4.  Update the `baseurl` property in `config.toml` to the URL of the blog.
+3.  Update the `baseurl` property in `config.toml` to the URL of the blog.
 
     ```toml
     baseurl = "https://jhoodsmith.github.io/"
     ```
 
-5.  In your account settings in GitHub, create a new personal access token (PAT)
+4.  In your account settings in GitHub, create a new personal access token (PAT)
     with read and write access to your repositories. (Skip this step if you
     already have a suitable PAT).
 
-6.  Store the PAT in the `Secrets` setting of the `blog-source` repository with
+5.  Store the PAT in the `Secrets` setting of the `blog-source` repository with
     key name `PERSONAL_TOKEN`.
 
-7.  Create a new GitHub Actions workflow in `.github/workflows/blog_deploy.yml`
+6.  Create a new GitHub Actions workflow in `.github/workflows/blog_deploy.yml`
 
     ```yaml
     name: hugo CI

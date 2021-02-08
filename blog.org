@@ -104,9 +104,6 @@ have automatic deployment with [[https://github.com/features/actions][GitHub Act
    the deployed site. In my case the repositories are =blog-source= and
    =jhoodsmith.github.io=.
 
-2. In the "GitHub Pages" section of the settings page of the
-   =jhoodsmith.github.io= repository, set the source to the =main= branch.
-
 2. Add a basic =.gitignore= file to the blog directory root
    #+BEGIN_SRC text
      # Hugo default output directory
