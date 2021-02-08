@@ -26,6 +26,6 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           personal_token: ${{ secrets.PERSONAL_TOKEN }}
-          external_repository: jhoodsmith/blog
+          external_repository: jhoodsmith/jhoodsmith.github.io
           publish_branch: main
           publish_dir: ./public
