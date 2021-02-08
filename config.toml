@@ -22,6 +22,9 @@ footnoteReturnLinkContents = "^"
 [outputs]
   section = ["JSON", "HTML"]
 
+[params]
+  customCSS = ["/blog/css/custom.css"] # in case you use `/static/css/custom.css`
+
 [[params.nav]]
   identifier = "about"
   name = "About"

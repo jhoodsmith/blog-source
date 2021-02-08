@@ -1,24 +1,24 @@
 +++
 title = "Hugo blog with Org and GitHub Actions"
 author = ["James Hood-Smith"]
+summary = """
+  In which I setup a working environment for writing a Hugo blog in Org with
+  automatic deployment using GitHub Actions.
+  """
 date = 2021-02-02
-lastmod = 2021-02-07T10:14:51+00:00
+lastmod = 2021-02-07T21:23:47+00:00
 tags = ["hugo", "org"]
-categories = ["emacs"]
+categories = ["blogging"]
 draft = false
 weight = 2001
 +++
 
-In which we setup our working environment for creating blog posts as sub-trees
-in a single org file.
-
-
 ## Motivation {#motivation}
 
-Like many dyed-in-the-wool Emacs users, I use Org Mode for much of my writing. I
+Like many dyed-in-the-wool Emacs users, I use [Org Mode](https://orgmode.org) for much of my writing. I
 want a blog that I can deploy and write posts for in Org with minimum fuss.
-Having started to read Brian P. Hogan's [book](https://pragprog.com/titles/bhhugo/build-websites-with-hugo/), I want to give [Hugo](https://gohugo.io) a try, and I
-really like [GitHub Actions](https://github.com/features/actions).
+Having heard good things about it, I want to give [Hugo](https://gohugo.io) a try. I also want to
+have automatic deployment with [GitHub Actions](https://github.com/features/actions).
 
 
 ## Steps {#steps}
@@ -51,7 +51,9 @@ really like [GitHub Actions](https://github.com/features/actions).
     ```
 
 2.  Configure Emacs to automatically create markdown files after saving the org source:
-    Add the following to the file `.dir-locals.el` in blog root
+
+    This is accomplished by adding the following Emacs Lisp expression to
+    `.dir-locals.el` in the project root.
 
     ```elisp
     ((org-mode . ((eval . (org-hugo-auto-export-mode)))))
@@ -64,8 +66,10 @@ really like [GitHub Actions](https://github.com/features/actions).
     git submodule add https://github.com/alexandrevicenzi/harbor.git
     ```
 
-    Copy the configuration from the theme's [page in Hugo Themes](https://themes.gohugo.io/harbor/) into the file
-    `config.toml`.
+    I want to use my blog straight away---hence my use of someone else's theme.
+    In a subsequent post I look at modifying the theme, but for the time
+    being I use the theme as is, and copy the configuration from the theme's
+    [home page in Hugo Themes](https://themes.gohugo.io/harbor/) to `config.toml`.
 
 4.  Add `blog.org` to the root of the blog directory and create your first blog post
 
@@ -89,13 +93,21 @@ really like [GitHub Actions](https://github.com/features/actions).
     ...
     ```
 
+    To ensure things are working well run the Hugo development server
+
+    ```bash
+    hugo server -D --navigateToChange
+    ```
+
+    View the blog at `http://localhost:1313`.
+
 
 ### Automatic deployment to GitHub pages {#automatic-deployment-to-github-pages}
 
 1.  Go to GitHub and create a repository for the source code and a repository for
     the deployed site. In my case the repositories are `blog-source` and `blog`.
 
-2.  In the 'GitHub Pages' section of the settings page of the `blog` repository,
+2.  In the "GitHub Pages" section of the settings page of the `blog` repository,
     set the source to the `main` branch.
 
 3.  Add a basic `.gitignore` file to the blog directory root

@@ -1,6 +1,7 @@
 #+hugo_base_dir: ./
 #+hugo_weight: auto
 #+hugo_auto_set_lastmod: t
+#+hugo_front_matter_key_replace: description>summary
 #+author: James Hood-Smith
 
 * About
@@ -8,8 +9,10 @@
 :EXPORT_HUGO_SECTION: /
 :EXPORT_FILE_NAME: about
 :END:
-About me
-* Emacs                                                              :@emacs:
+I am a computer scientist and software developer working in and around London.
+The intended audience for this blog is for the most part my future self, with the
+posts serving as reminders for how to get things done.
+* Blogging                                                        :@blogging:
 All posts in here will have the category set to /emacs/.
 ** DONE Hugo blog with Org and GitHub Actions                      :hugo:org:
 :PROPERTIES:
@@ -17,14 +20,16 @@ All posts in here will have the category set to /emacs/.
 :EXPORT_DATE: 2021-02-02
 :END:
 
-In which we setup our working environment for creating blog posts as sub-trees
-in a single org file.
+#+begin_description
+In which I setup a working environment for writing a Hugo blog in Org with
+automatic deployment using GitHub Actions.
+#+end_description
 
 *** Motivation
-Like many dyed-in-the-wool Emacs users, I use Org Mode for much of my writing. I
+Like many dyed-in-the-wool Emacs users, I use [[https://orgmode.org][Org Mode]] for much of my writing. I
 want a blog that I can deploy and write posts for in Org with minimum fuss.
-Having started to read Brian P. Hogan's [[https://pragprog.com/titles/bhhugo/build-websites-with-hugo/][book]], I want to give [[https://gohugo.io][Hugo]] a try, and I
-really like [[https://github.com/features/actions][GitHub Actions]].
+Having heard good things about it, I want to give [[https://gohugo.io][Hugo]] a try. I also want to
+have automatic deployment with [[https://github.com/features/actions][GitHub Actions]].
 
 *** Steps
 
@@ -49,7 +54,9 @@ really like [[https://github.com/features/actions][GitHub Actions]].
    #+END_SRC
 
 2. Configure Emacs to automatically create markdown files after saving the org source:
-   Add the following to the file =.dir-locals.el= in blog root
+
+   This is accomplished by adding the following Emacs Lisp expression to
+   =.dir-locals.el= in the project root.
    #+BEGIN_SRC elisp
      ((org-mode . ((eval . (org-hugo-auto-export-mode)))))
    #+END_SRC
@@ -59,8 +66,10 @@ really like [[https://github.com/features/actions][GitHub Actions]].
      cd themes/
      git submodule add https://github.com/alexandrevicenzi/harbor.git
    #+END_SRC
-   Copy the configuration from the theme's [[https://themes.gohugo.io/harbor/][page in Hugo Themes]] into the file
-   =config.toml=.
+   I want to use my blog straight away---hence my use of someone else's theme.
+   In a subsequent post I look at modifying the theme, but for the time
+   being I use the theme as is, and copy the configuration from the theme's 
+   [[https://themes.gohugo.io/harbor/][home page in Hugo Themes]] to =config.toml=.
 
 5. Add =blog.org= to the root of the blog directory and create your first blog post
    #+BEGIN_SRC org
@@ -83,11 +92,18 @@ really like [[https://github.com/features/actions][GitHub Actions]].
      ...
    #+END_SRC
 
+   To ensure things are working well run the Hugo development server
+   #+BEGIN_SRC bash
+     hugo server -D --navigateToChange
+   #+END_SRC
+   View the blog at =http://localhost:1313=.
+
+
 **** Automatic deployment to GitHub pages
 1. Go to GitHub and create a repository for the source code and a repository for
    the deployed site. In my case the repositories are =blog-source= and =blog=.
 
-2. In the 'GitHub Pages' section of the settings page of the =blog= repository,
+2. In the "GitHub Pages" section of the settings page of the =blog= repository,
    set the source to the =main= branch.
 
 2. Add a basic =.gitignore= file to the blog directory root
@@ -156,3 +172,63 @@ really like [[https://github.com/features/actions][GitHub Actions]].
 
 If all has gone well, then the blog should automatically be deployed to your
 GitHub pages site each time you push to the =main= branch of =blog-source=.
+** TODO Tweaking a Hugo theme                                      :hugo:org:
+:PROPERTIES:
+:EXPORT_FILE_NAME: modify-hugo-theme
+:EXPORT_DATE: 2021-02-07
+:END:
+
+#+begin_description
+In which I modify an existing Hugo theme to add a custom page element.
+#+end_description
+
+*** Motivation
+In my [[*Hugo blog with Org and GitHub Actions][last post]] I setup a new Hugo blog with an Org and GitHub Actions workflow.
+I used an off-the-shelf theme, but now want a new, custom page element---a
+short, one-or-two sentence summary that sits at the top of each post.
+
+*** Steps
+
+**** Replace front-matter key
+In line with the ox-hugo [[https://ox-hugo.scripter.co/doc/replace-front-matter-keys/][instructions]], we add the following to the top of our Org source:
+#+BEGIN_SRC markdown
+  ,#+hugo_front_matter_key_replace: description>summary
+#+END_SRC
+This ensures that the value of the Hugo =.Summary= variable equates to the Org
+=Descriptio= meta data.
+
+In each post we specify the value of =Description= in its own drawer:
+#+BEGIN_SRC org
+  ,** TODO Tweaking a Hugo theme                                      :hugo:org:
+  :PROPERTIES:
+  :EXPORT_FILE_NAME: modify-hugo-theme
+  :EXPORT_DATE: 2021-02-07
+  :END:
+
+  ,#+begin_description
+  In which I modify an existing Hugo theme to add a custom page element.
+  ,#+end_description
+
+  ,*** Motivation
+  In my [[*Hugo blog with Org and GitHub Actions][last post]] I setup a 
+  new Hugo blog ...
+#+END_SRC
+I place this straight after the =PROPERTIES= drawer.
+
+**** Inserting summary above content
+To combine your own site components with those from a theme, it's just a matter
+of creating a file with the same name and directory structure as the file you
+want to replace. In my case, I want to modify part of
+=/themes/harbor/layouts/partials/toc.html=, which is where the theme author
+inserts the page variable =.Content=. Hence, I put a copy of the file at
+=/layouts/partials/toc.html= and modify that.
+
+In the copy of =toc.html= I replace ={{ .Content }}= with the following.
+#+BEGIN_SRC html
+  {{ if eq .Type "posts" }}
+  <div class="summary">
+    {{ .Summary }}
+  </div>
+  {{ end }}
+  {{ .Content }}
+#+END_SRC
