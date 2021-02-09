@@ -1,12 +1,15 @@
 <meta charset="utf-8" />
 <title>{{ .Title }}</title>
 {{ with .Site.Params.description }}
-  <meta name="description" content="{{ . }}" />
+<meta name="description" content="{{ . }}" />
 {{ end }}
 {{- with .Site.Author.Name }}
-  <meta name="author" content="{{ . }}" />
+<meta name="author" content="{{ . }}" />
 {{- end }}
-{{ partial "analytics.html" . }}
+{{ if ( not .Site.IsServer ) }}
+<script data-goatcounter="https://jhoodsmith.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+{{ end }}
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link
