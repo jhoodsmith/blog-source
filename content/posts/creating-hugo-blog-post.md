@@ -5,8 +5,7 @@ summary = """
   In which I setup a working environment for writing a Hugo blog in Org with
   automatic deployment using GitHub Actions.
   """
-date = 2021-02-02
-lastmod = 2021-02-08T23:32:08+00:00
+date = 2021-02-03
 tags = ["hugo", "org"]
 categories = ["blogging"]
 draft = false
@@ -76,7 +75,6 @@ have automatic deployment with [GitHub Actions](https://github.com/features/acti
     ```org
     #+hugo_base_dir: ./
     #+hugo_weight: auto
-    #+hugo_auto_set_lastmod: t
     #+author: James Hood-Smith
 
     * Emacs                                                              :@emacs:

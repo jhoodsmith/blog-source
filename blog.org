@@ -1,6 +1,5 @@
 #+hugo_base_dir: ./
 #+hugo_weight: auto
-#+hugo_auto_set_lastmod: t
 #+hugo_front_matter_key_replace: description>summary
 #+author: James Hood-Smith
 
@@ -17,7 +16,7 @@ All posts in here will have the category set to /emacs/.
 ** DONE Hugo blog with Org and GitHub Actions                      :hugo:org:
 :PROPERTIES:
 :EXPORT_FILE_NAME: creating-hugo-blog-post
-:EXPORT_DATE: 2021-02-02
+:EXPORT_DATE: 2021-02-03
 :END:
 
 #+begin_description
@@ -75,7 +74,6 @@ have automatic deployment with [[https://github.com/features/actions][GitHub Act
    #+BEGIN_SRC org
      ,#+hugo_base_dir: ./
      ,#+hugo_weight: auto
-     ,#+hugo_auto_set_lastmod: t
      ,#+author: James Hood-Smith
 
      ,* Emacs                                                              :@emacs:
@@ -173,7 +171,7 @@ GitHub pages site each time you push to the =main= branch of =blog-source=.
 ** DONE Tweaking a Hugo theme                                      :hugo:org:
 :PROPERTIES:
 :EXPORT_FILE_NAME: modify-hugo-theme
-:EXPORT_DATE: 2021-02-07
+:EXPORT_DATE: 2021-02-08
 :END:
 
 #+begin_description
@@ -194,7 +192,7 @@ equate it to the first 70 words of the page content. I have decided to always
 set it explicitly, and I want it inserted at the top of each post (as is
 done on this page you are reading).
 
-I start by adding the following line to the top of my Org source:
+I start by adding the following to the top of my Org source:
 #+BEGIN_SRC markdown
   ,#+hugo_front_matter_key_replace: description>summary
 #+END_SRC

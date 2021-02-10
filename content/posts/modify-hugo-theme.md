@@ -2,8 +2,7 @@
 title = "Tweaking a Hugo theme"
 author = ["James Hood-Smith"]
 summary = "In which I modify an existing Hugo theme to add a custom page element."
-date = 2021-02-07
-lastmod = 2021-02-08T21:55:02+00:00
+date = 2021-02-08
 tags = ["hugo", "org"]
 categories = ["blogging"]
 draft = false
@@ -28,7 +27,7 @@ equate it to the first 70 words of the page content. I have decided to always
 set it explicitly, and I want it inserted at the top of each post (as is
 done on this page you are reading).
 
-I start by adding the following line to the top of my Org source:
+I start by adding the following to the top of my Org source:
 
 ```markdown
 #+hugo_front_matter_key_replace: description>summary
