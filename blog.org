@@ -11,12 +11,13 @@
 I am a computer scientist and software developer working in and around London.
 The intended audience for this blog is for the most part my future self, with the
 posts serving as reminders for how to get things done.
-* Blogging                                                        :@blogging:
+* Blogging                                           :@blogging:
 All posts in here will have the category set to /emacs/.
 ** DONE Hugo blog with Org and GitHub Actions                      :hugo:org:
 :PROPERTIES:
 :EXPORT_FILE_NAME: creating-hugo-blog-post
-:EXPORT_DATE: 2021-02-03
+:EXPORT_DATE: 2021-02-05
+:EXPORT_HUGO_CUSTOM_FRONT_MATTER: :toc true
 :END:
 
 #+begin_description
@@ -31,10 +32,9 @@ Having heard good things about it, I want to give [[https://gohugo.io][Hugo]] a 
 have automatic deployment with [[https://github.com/features/actions][GitHub Actions]].
 
 *** Steps
-
 **** Installation
 1. Install Hugo:
-   #+BEGIN_SRC bash
+   #+BEGIN_SRC shell
    brew install hugo
    #+END_SRC
 
@@ -48,7 +48,7 @@ have automatic deployment with [[https://github.com/features/actions][GitHub Act
 
 **** Setup blog with first post
 1. Create new site:
-   #+BEGIN_SRC bash
+   #+BEGIN_SRC shell
      hugo new site blog
    #+END_SRC
 
@@ -61,14 +61,14 @@ have automatic deployment with [[https://github.com/features/actions][GitHub Act
    #+END_SRC
 
 4. Add a nice theme as a git sub-module (I'm using [[https://github.com/matsuyoshi30/harbor][Harbor]]).
-   #+BEGIN_SRC bash
+   #+BEGIN_SRC shell
      cd themes/
      git submodule add https://github.com/alexandrevicenzi/harbor.git
    #+END_SRC
    I want to use my blog straight away---hence my use of someone else's theme.
-   In a subsequent post I look at modifying the theme, but for the time
-   being I use the theme as is, and copy the configuration from the theme's 
-   [[https://themes.gohugo.io/harbor/][home page in Hugo Themes]] to =config.toml=.
+   In a subsequent post I look at creating a new theme from scratch, but for the
+   time being I use Harbor with its default settings, hence I copy the
+   configuration from the theme's [[https://themes.gohugo.io/harbor/][home page in Hugo Themes]] to =config.toml=.
 
 5. Add =blog.org= to the root of the blog directory and create your first blog post
    #+BEGIN_SRC org
@@ -76,27 +76,60 @@ have automatic deployment with [[https://github.com/features/actions][GitHub Act
      ,#+hugo_weight: auto
      ,#+author: James Hood-Smith
 
-     ,* Emacs                                                              :@emacs:
-     All posts in here will have the category set to /emacs/.
-     ,** TODO Writing Hugo blog posts in Org                             :hugo:org:
+     ,* Blogging                                                        :@blogging:
+     All posts in here will have the category set to /blogging/.
+     ,** DONE Hugo blog with Org and GitHub Actions                      :hugo:org:
      :PROPERTIES:
      :EXPORT_FILE_NAME: creating-hugo-blog-post
-     :EXPORT_DATE: 2021-02-02
+     :EXPORT_DATE: 2021-02-03
+     :EXPORT_HUGO_CUSTOM_FRONT_MATTER: :toc true
      :END:
-     In which we setup our working environment for creating blog posts as sub-trees
-     in a single org file.
 
-     ,*** Installation
-     ...
+     ,#+begin_description
+     In which I setup a working environment for writing a Hugo blog in Org with
+     automatic deployment using GitHub Actions.
+     ,#+end_description
+
+     ,*** Motivation
+     Like many dyed-in-the-wool Emacs users, I use [[https://orgmode.org][Org Mode]] ...
    #+END_SRC
 
    To ensure things are working well run the Hugo development server
-   #+BEGIN_SRC bash
+   #+BEGIN_SRC shell
      hugo server -D --navigateToChange
    #+END_SRC
    View the blog at =http://localhost:1313=.
+**** Making change to theme
+***** Overwriting the Hugo .Summary page variable
+Notice in the blog post source above that I made use of the Org meta data
+=Description= variable. I would like this to be used in place of the Hugo page
+variable =.Summary=.  To achive this I need to add the following to the top of my
+Org source
 
+#+BEGIN_SRC markdown
+  ,#+hugo_front_matter_key_replace: description>summary
+#+END_SRC
+As explained [[https://ox-hugo.scripter.co/doc/replace-front-matter-keys/][here]], this swaps the Hugo front-matter variable with the Org meta
+data variable.
+***** Modifying theme layout file
+To change an aspect of a Hugo theme, it's just a matter of creating a file with
+the same name and directory structure as the layout file you want to replace. In
+my case, I want to modify part of =/themes/harbor/layouts/partials/toc.html=,
+which is where the theme author inserts the page variable =.Content=. Hence, I
+copy the file to =/layouts/partials/toc.html=.
 
+In the copy of =toc.html=, I then replace ={{ .Content }}= with the following.
+#+BEGIN_SRC html
+  {{ if eq .Type "posts" }}
+  <div class="summary">
+    {{ .Summary }}
+  </div>
+  {{ end }}
+  {{ .Content }}
+#+END_SRC
+This ensures that all content files of type "posts" will have their content
+prefaced with the value of =.Summary=. Following the theme author's
+instructions, I have added my custom CSS to =/static/css/custom.css=.
 **** Automatic deployment to GitHub pages
 1. Go to GitHub and create a repository for the source code and a repository for
    the deployed site. In my case the repositories are =blog-source= and
@@ -132,109 +165,41 @@ have automatic deployment with [[https://github.com/features/actions][GitHub Act
 
 7. Create a new GitHub Actions workflow in =.github/workflows/deploy.yml=
    #+BEGIN_SRC yaml
-name: hugo CI
+     name: hugo CI
 
-on:
-  push:
-    branches: [ main ]
+     on:
+       push:
+	 branches: [ main ]
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+     jobs:
+       build:
+	 runs-on: ubuntu-latest
+	 steps:
+	   - uses: actions/checkout@v2
+	     with:
+	       submodules: true 
+	       fetch-depth: 1   
 
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: true 
-          fetch-depth: 1   
+	   - name: Setup Hugo
+	     uses: peaceiris/actions-hugo@v2
+	     with:
+	       hugo-version: 'latest'
 
-      - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v2
-        with:
-          hugo-version: 'latest'
+	   - name: Build
+	     run: hugo --minify
 
-      - name: Build
-        run: hugo
-
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          personal_token: ${{ secrets.PERSONAL_TOKEN }}
-          external_repository: jhoodsmith/jhoodsmith.github.io
-          publish_branch: main
-          publish_dir: ./public
+	   - name: Deploy
+	     uses: peaceiris/actions-gh-pages@v3
+	     with:
+	       personal_token: ${{ secrets.PERSONAL_TOKEN }}
+	       external_repository: jhoodsmith/jhoodsmith.github.io
+	       publish_branch: main
+	       publish_dir: ./public
    #+END_SRC
 
 If all has gone well, then the blog should automatically be deployed to your
 GitHub pages site each time you push to the =main= branch of =blog-source=.
-** DONE Tweaking a Hugo theme                                      :hugo:org:
-:PROPERTIES:
-:EXPORT_FILE_NAME: modify-hugo-theme
-:EXPORT_DATE: 2021-02-08
-:END:
-
-#+begin_description
-In which I modify an existing Hugo theme to add a custom page element.
-#+end_description
-
-*** Motivation
-In my [[*Hugo blog with Org and GitHub Actions][last post]] I setup a new Hugo blog with an Org and GitHub Actions workflow.
-I used an off-the-shelf theme, but now want a new, custom page element---a
-short, one-or-two sentence summary that sits at the top of each post.
-
-*** Steps
-
-**** Overwriting the Hugo .Summary page variable
-The Hugo page variable =.Summary= is used in index pages and contains a
-shortened or summarised version of a post. If not set explicitly, Hugo will
-equate it to the first 70 words of the page content. I have decided to always
-set it explicitly, and I want it inserted at the top of each post (as is
-done on this page you are reading).
-
-I start by adding the following to the top of my Org source:
-#+BEGIN_SRC markdown
-  ,#+hugo_front_matter_key_replace: description>summary
-#+END_SRC
-As explained [[https://ox-hugo.scripter.co/doc/replace-front-matter-keys/][here]], this ensures that the value of the Hugo =.Summary= variable
-is matched to the Org meta data =Description=.
-
-In my Org source I can then add a  =Description= drawer to each post.
-#+BEGIN_SRC org
-  ,** TODO Tweaking a Hugo theme                                      :hugo:org:
-  :PROPERTIES:
-  :EXPORT_FILE_NAME: modify-hugo-theme
-  :EXPORT_DATE: 2021-02-07
-  :END:
-
-  ,#+begin_description
-  In which I modify an existing Hugo theme to add a custom page element.
-  ,#+end_description
-
-  ,*** Motivation
-  In my [[*Hugo blog with Org and GitHub Actions][last post]] I setup a 
-  new Hugo blog ...
-#+END_SRC
-
-**** Modifying theme layout file
-To change an aspect of a Hugo theme, it's just a matter of creating a file with
-the same name and directory structure as the layout file you want to replace. In
-my case, I want to modify part of =/themes/harbor/layouts/partials/toc.html=,
-which is where the theme author inserts the page variable =.Content=. Hence, I
-copy the file to =/layouts/partials/toc.html=.
-
-In the copy of =toc.html=, I then replace ={{ .Content }}= with the following.
-#+BEGIN_SRC html
-  {{ if eq .Type "posts" }}
-  <div class="summary">
-    {{ .Summary }}
-  </div>
-  {{ end }}
-  {{ .Content }}
-#+END_SRC
-This ensures that all content files of type "posts" will have their content
-prefaced with the value of =.Summary=. Following the theme author's
-instructions, I have added my custom CSS to =/static/css/custom.css=.
-* General                                                          :@general:
+* General                                            :@general:
 ** TODO Starting from scratch
 :PROPERTIES:
 :EXPORT_FILE_NAME: starting-from-scratch
