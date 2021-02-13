@@ -130,40 +130,39 @@ have automatic deployment with [[https://github.com/features/actions][GitHub Act
 5. Store the PAT in the =Secrets= setting of the =blog-source= repository with
    key name =PERSONAL_TOKEN=.
 
-7. Create a new GitHub Actions workflow in =.github/workflows/blog_deploy.yml=
+7. Create a new GitHub Actions workflow in =.github/workflows/deploy.yml=
    #+BEGIN_SRC yaml
-     name: hugo CI
+name: hugo CI
 
-     on:
-       push:
-	 branches: [ main ]
+on:
+  push:
+    branches: [ main ]
 
-     jobs:
-       build:
-	 runs-on: ubuntu-latest
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-	 steps:
-	   - uses: actions/checkout@v2
-	     with:
-	       submodules: true 
-	       fetch-depth: 1   
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true 
+          fetch-depth: 1   
 
-	   - name: Setup Hugo
-	     uses: peaceiris/actions-hugo@v2
-	     with:
-	       hugo-version: 'latest'
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: 'latest'
 
-	   - name: Build
-	     run: hugo
+      - name: Build
+        run: hugo
 
-	   - name: Deploy
-	     uses: peaceiris/actions-gh-pages@v3
-	     with:
-	       personal_token: ${{ secrets.PERSONAL_TOKEN }}
-	       external_repository: jhoodsmith/jhoodsmith.github.io
-	       publish_branch: main
-	       publish_dir: ./public
-
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          personal_token: ${{ secrets.PERSONAL_TOKEN }}
+          external_repository: jhoodsmith/jhoodsmith.github.io
+          publish_branch: main
+          publish_dir: ./public
    #+END_SRC
 
 If all has gone well, then the blog should automatically be deployed to your
@@ -235,3 +234,85 @@ In the copy of =toc.html=, I then replace ={{ .Content }}= with the following.
 This ensures that all content files of type "posts" will have their content
 prefaced with the value of =.Summary=. Following the theme author's
 instructions, I have added my custom CSS to =/static/css/custom.css=.
+* General                                                          :@general:
+** TODO Starting from scratch
+:PROPERTIES:
+:EXPORT_FILE_NAME: starting-from-scratch
+:EXPORT_DATE: 2021-02-12
+:EXPORT_HUGO_CUSTOM_FRONT_MATTER: :toc true
+:END:
+
+#+begin_description
+In which I describe the starter projects for the languages and frameworks I work
+with.
+#+end_description
+
+*** Motiviation
+"How do I start this again?", I frequently ask myself when I start a new
+project. What are the external libraries I need? How do I setup the working
+environment? Even for small projects there are things they need to play nice with
+my [[https://github.com/jhoodsmith/.emacs.d][Emacs configuration]].
+
+*** Ruby (non Rails)
+Create project directory
+#+BEGIN_SRC shell
+mkdir new-project-name
+cd new-project-name
+#+END_SRC
+
+Install [[https://bundler.io][Bundler]]
+#+BEGIN_SRC shell
+gem install bundler
+#+END_SRC
+Specify dependencies in a =Gemfile=
+#+BEGIN_SRC ruby
+source 'https://rubygems.org'
+gem 'pry'
+gem 'pry-doc'
+gem 'rspec'
+gem 'rubocop', require: false
+#+END_SRC
+Install and initialise [[https://rspec.info][RSpec]]
+#+BEGIN_SRC shell
+bundle install
+rspec --init
+#+END_SRC
+Add an appropriate =.gitignore= file from [[https://gitignore.io]]
+
+*** Python
+Assuming [[https://github.com/pyenv/pyenv][pyenv]] is installed, remind yourself of what versions are available on the local system
+#+BEGIN_SRC shell
+pyenv versions
+#+END_SRC
+Create a new virtual environemnt for the your chosen python version
+#+BEGIN_SRC shell
+pyenv virtualenv 3.7.5 new-project-name
+#+END_SRC
+Create project directory
+#+BEGIN_SRC shell
+mkdir new-project-name
+cd new-project-name
+#+END_SRC
+Create =.python-version=
+#+BEGIN_SRC shell
+echo new-project-name > .python-version
+#+END_SRC
+Specifiy development dependencies in =requirements.txt=
+#+BEGIN_SRC text
+###### Working environment ######
+ipython
+jedi
+pytest
+
+###### Frequently used ######
+numpy
+pandas
+requests
+scikit-learn
+scipy
+#+END_SRC
+Install packages
+#+BEGIN_SRC shell
+pip install -r requirements.txt
+#+END_SRC
+Add an appropriate =.gitignore= file from [[https://gitignore.io]]

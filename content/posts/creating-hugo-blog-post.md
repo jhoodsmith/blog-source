@@ -136,7 +136,7 @@ have automatic deployment with [GitHub Actions](https://github.com/features/acti
 5.  Store the PAT in the `Secrets` setting of the `blog-source` repository with
     key name `PERSONAL_TOKEN`.
 
-6.  Create a new GitHub Actions workflow in `.github/workflows/blog_deploy.yml`
+6.  Create a new GitHub Actions workflow in `.github/workflows/deploy.yml`
 
     ```yaml
     name: hugo CI
@@ -151,25 +151,25 @@ have automatic deployment with [GitHub Actions](https://github.com/features/acti
 
         steps:
     ​      - uses: actions/checkout@v2
-       with:
-         submodules: true
-         fetch-depth: 1
+    	with:
+    	  submodules: true
+    	  fetch-depth: 1
 
           - name: Setup Hugo
-       uses: peaceiris/actions-hugo@v2
-       with:
-         hugo-version: 'latest'
+    	uses: peaceiris/actions-hugo@v2
+    	with:
+    	  hugo-version: 'latest'
 
           - name: Build
-       run: hugo
+    	run: hugo
 
           - name: Deploy
-       uses: peaceiris/actions-gh-pages@v3
-       with:
-         personal_token: ${{ secrets.PERSONAL_TOKEN }}
-         external_repository: jhoodsmith/jhoodsmith.github.io
-         publish_branch: main
-         publish_dir: ./public
+    	uses: peaceiris/actions-gh-pages@v3
+    	with:
+    	  personal_token: ${{ secrets.PERSONAL_TOKEN }}
+    	  external_repository: jhoodsmith/jhoodsmith.github.io
+    	  publish_branch: main
+    	  publish_dir: ./public
     ```
 
 If all has gone well, then the blog should automatically be deployed to your
