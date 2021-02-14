@@ -1,0 +1,31 @@
+{{ define "main" }}
+{{ $pag := .Paginate (where site.RegularPages "Type" "posts") }}
+<main class="container px-2 py-6 mx-auto flex-1 max-w-screen-lg">
+  <h1 class="font-medium text-4xl text-white text-center mb-6">Aides-Mémoire</h1>
+  <div class="divide-y-2 divide-gray-800">
+  {{ range $pag.Pages }}
+  <section class="py-8 flex flex-wrap md:flex-nowrap">
+    <div class="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
+      <span class="font-semibold text-white uppercase">
+	{{ range .Params.categories }}
+	<a href="{{ $.Site.BaseURL }}categories/{{ . | urlize }}">{{ . }}</a>
+	{{ end }}
+      </span>
+      <span class="mt-1 text-gray-500 text-sm">
+	{{ .Date.Format "Jan 1, 2006" }}
+      </span>
+    </div>
+    <div class="md:flex-grow">
+      <a href="{{ .Permalink }}">
+	<h2 class="text-2xl font-medium text-white title-font mb-2">{{ .Title }}</h2>
+      </a>
+      <p class="leading-relaxed">{{ .Summary }}</p>
+      <a href="{{ .Permalink }}" class="text-yellow-400 hover:text-yellow-300 mt-4 hover:underline">
+	Read more <i class="fas fa-arrow-right text-sm"></i>
+      </a>
+    </div>
+  </section>
+  {{ end }}
+  </div>
+</main>
+{{ end }}

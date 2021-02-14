@@ -10,3 +10,10 @@ $RECYCLE.BIN/
 
 # OSX
 .DS_Store
+
+/node_modules
+/resources
+hugo_stats.json
+
+# Do not include app.js, which is generated from webpack
+/themes/jhs-tailwindcss/assets/js/app.js

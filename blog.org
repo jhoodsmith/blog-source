@@ -7,12 +7,12 @@
 :PROPERTIES:
 :EXPORT_HUGO_SECTION: /
 :EXPORT_FILE_NAME: about
+:EXPORT_HUGO_CUSTOM_FRONT_MATTER: :layout "about"
 :END:
-I am a computer scientist and software developer working in and around London.
+I am a computer scientist, software developer working in and around London.
 The intended audience for this blog is for the most part my future self, with the
 posts serving as reminders for how to get things done.
 * Blogging                                           :@blogging:
-All posts in here will have the category set to /emacs/.
 ** DONE Hugo blog with Org and GitHub Actions                      :hugo:org:
 :PROPERTIES:
 :EXPORT_FILE_NAME: creating-hugo-blog-post
@@ -177,7 +177,7 @@ instructions, I have added my custom CSS to =/static/css/custom.css=.
 	 steps:
 	   - uses: actions/checkout@v2
 	     with:
-	       submodules: true 
+	       submodules: true
 	       fetch-depth: 1   
 
 	   - name: Setup Hugo
@@ -199,6 +199,110 @@ instructions, I have added my custom CSS to =/static/css/custom.css=.
 
 If all has gone well, then the blog should automatically be deployed to your
 GitHub pages site each time you push to the =main= branch of =blog-source=.
+** TODO Creating custom Hugo theme with Tailwind CSS
+:PROPERTIES:
+:EXPORT_FILE_NAME: custom-theme-with-tailwindcss
+:EXPORT_DATE: 2021-02-05
+:EXPORT_HUGO_CUSTOM_FRONT_MATTER: :toc true
+:END:
+
+#+begin_description
+In which I create a new Hugo theme using Tailwind CSS and Hugo Pipes, and upgrade
+my GitHub Actions workflow to use NPM.
+#+end_description
+
+*** Motivation
+In my [[Hugo blog with Org and GitHub Actions][previous post]]
+*** Install Tailwind CSS
+
+In blog source root
+#+BEGIN_SRC shell
+hugo new theme jhs-tailwindcss
+npm init
+npm install --save-dev autoprefixer postcss postcss-cli postcss-import tailwindcss
+#+END_SRC
+
+In =config.toml=
+#+BEGIN_SRC toml
+...
+theme = "jhs-tailwindcss"
+#+END_SRC
+
+In =themes/jhs-tailwindtheme/assets/css/postcss.config.js=
+#+BEGIN_SRC js
+  const themeDir = __dirname + '/../../';
+
+  const purgecss = require('@fullhuman/postcss-purgecss')({
+      // see https://gohugo.io/hugo-pipes/postprocess/#css-purging-with-postcss
+      // and https://github.com/dirkolbrich/hugo-theme-tailwindcss-starter
+      content: [
+	  './hugo_stats.json',
+	  themeDir + '/hugo_stats.json'
+      ],
+      defaultExtractor: (content) => {
+	  let els = JSON.parse(content).htmlElements;
+	  return els.tags.concat(els.classes, els.ids);
+      }
+  })
+
+  module.exports = {    
+      plugins: [        
+	  require('postcss-import')({
+	      path: [themeDir]
+	  }), 
+	  require('tailwindcss')(themeDir + 'assets/css/tailwind.config.js'),
+	  require('autoprefixer')({
+	      path: [themeDir]
+	  }),
+	  ...(process.env.HUGO_ENVIRONMENT === 'production' ? [purgecss] : [])
+      ]
+  }
+#+END_SRC
+
+#+RESULTS:
+
+In =themes/jhs-tailwindcss/assets/css/tailwind.config.js=
+#+BEGIN_SRC js
+module.exports = {
+  theme: {
+    extend: {}
+  },
+  variants: {},
+  plugins: []
+}
+#+END_SRC
+
+In =themes/jhs-tailwindcss/assets/css/styles.scss=
+#+BEGIN_SRC scss
+@import "node_modules/tailwindcss/base";
+@import "node_modules/tailwindcss/components";
+@import "node_modules/tailwindcss/utilities";
+#+END_SRC
+
+In =themes/jhs-tailwind/layouts/partials/head.html=
+#+BEGIN_SRC html
+  ...
+{{ $styles := resources.Get "css/styles.scss" | toCSS | postCSS (dict "config" "./assets/css/postcss.config.js") }}
+{{ if .Site.IsServer }}
+  <link rel="stylesheet" href="{{ $styles.RelPermalink }}">
+{{ else }}
+  {{ $styles := $styles | minify | fingerprint | resources.PostProcess }}
+  <link rel="stylesheet" href="{{ $styles.Permalink }}" integrity="{{ $styles.Data.Integrity }}">
+{{ end }}
+#+END_SRC
+
+*** Fontawesome
+
+#+BEGIN_SRC shell
+npm install --save @fortawesome/fontawesome-free
+#+END_SRC
+
+Add to =themes/jhs-tailwind/assets/js/index.js=
+#+BEGIN_SRC js
+  import '@fortawesome/fontawesome-free/js/fontawesome'
+  import '@fortawesome/fontawesome-free/js/solid'
+#+END_SRC
+
 * General                                            :@general:
 ** TODO Starting from scratch
 :PROPERTIES:
@@ -213,10 +317,9 @@ with.
 #+end_description
 
 *** Motiviation
-"How do I start this again?", I frequently ask myself when I start a new
-project. What are the external libraries I need? How do I setup the working
-environment? Even for small projects there are things they need to play nice with
-my [[https://github.com/jhoodsmith/.emacs.d][Emacs configuration]].
+"How do I start this again?" I often ask myself this when I start a new project.
+What are the external libraries I need? What tools do I need for test-driven
+development? How do I get things to play nice with my [[https://github.com/jhoodsmith/.emacs.d][Emacs configuration]].
 
 *** Ruby (non Rails)
 Create project directory
@@ -281,3 +384,45 @@ Install packages
 pip install -r requirements.txt
 #+END_SRC
 Add an appropriate =.gitignore= file from [[https://gitignore.io]]
+*** Ruby on Rails 6
+#+BEGIN_SRC shell
+  rails new -d postgresql new-project
+#+END_SRC
+
+#+BEGIN_SRC ruby
+  ...
+  group :development, :test do
+    ...
+    gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+    gem 'factory_bot_rails'
+    gem 'pry-byebug'
+    gem 'pry-doc'
+    gem 'rspec-rails'
+    gem 'rails-controller-testing'
+  end
+
+  group :development do
+    gem 'rubocop-rails'
+  end
+
+  gem 'devise'
+  gem 'devise_invitable'
+  gem 'tailwindcss-rails'
+#+END_SRC
+
+
+#+BEGIN_SRC shell
+  yarn add @fortawesome/fontawesome-free
+#+END_SRC
+
+Add to =app/javascript/packs/application.js=
+#+BEGIN_SRC js
+import "@fortawesome/fontawesome-free/css/all"
+#+END_SRC
+
+#+BEGIN_SRC shell
+  rails tailwindcss:install
+  rails db:create
+  rails g devise:install
+  rails g devise_invitable User
+#+END_SRC

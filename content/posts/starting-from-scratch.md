@@ -14,10 +14,9 @@ toc = true
 
 ## Motiviation {#motiviation}
 
-"How do I start this again?", I frequently ask myself when I start a new
-project. What are the external libraries I need? How do I setup the working
-environment? Even for small projects there are things they need to play nice with
-my [Emacs configuration](https://github.com/jhoodsmith/.emacs.d).
+"How do I start this again?" I often ask myself this when I start a new project.
+What are the external libraries I need? What tools do I need for test-driven
+development? How do I get things to play nice with my [Emacs configuration](https://github.com/jhoodsmith/.emacs.d).
 
 
 ## Ruby (non Rails) {#ruby--non-rails}
@@ -105,3 +104,48 @@ $ pip install -r requirements.txt
 ```
 
 Add an appropriate `.gitignore` file from <https://gitignore.io>
+
+
+## Ruby on Rails 6 {#ruby-on-rails-6}
+
+```shell
+$ rails new -d postgresql new-project
+```
+
+```ruby
+...
+group :development, :test do
+  ...
+  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'factory_bot_rails'
+  gem 'pry-byebug'
+  gem 'pry-doc'
+  gem 'rspec-rails'
+  gem 'rails-controller-testing'
+end
+
+group :development do
+  gem 'rubocop-rails'
+end
+
+gem 'devise'
+gem 'devise_invitable'
+gem 'tailwindcss-rails'
+```
+
+```shell
+$ yarn add @fortawesome/fontawesome-free
+```
+
+Add to `app/javascript/packs/application.js`
+
+```js
+import "@fortawesome/fontawesome-free/css/all"
+```
+
+```shell
+$ rails tailwindcss:install
+$ rails db:create
+$ rails g devise:install
+$ rails g devise_invitable User
+```

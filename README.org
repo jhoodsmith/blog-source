@@ -1,0 +1,19 @@
+* Blog
+My little corner of the web created using org-mode and Hugo.
+
+** Installation
+
+1. Setup Hugo
+   #+BEGIN_SRC shell
+     brew install hugo
+   #+END_SRC
+
+2. Install dependencies
+   #+BEGIN_SRC shell
+     npm install
+   #+END_SRC
+
+3. Run Hugo development server
+   #+BEGIN_SRC shell
+     hugo server -D --navigateToChanged
+   #+END_SRC

@@ -18,7 +18,7 @@ toc = true
 Like many dyed-in-the-wool Emacs users, I use [Org Mode](https://orgmode.org) for much of my writing. I
 want a blog that I can deploy and write posts for in Org with minimum fuss.
 Having heard good things about it, I want to give [Hugo](https://gohugo.io) a try. I also want to
-have automatic deployment with [GitHub Actions](https://github.com/features/actions).
+have automatic deployment with [GitHub Actions](https://github.com/features/actions)
 
 
 ## Steps {#steps}
@@ -197,25 +197,25 @@ instructions, I have added my custom CSS to `/static/css/custom.css`.
         runs-on: ubuntu-latest
         steps:
     ​      - uses: actions/checkout@v2
-	        with:
-              submodules: true
-              fetch-depth: 1
+       with:
+         submodules: true
+         fetch-depth: 1
 
           - name: Setup Hugo
-            uses: peaceiris/actions-hugo@v2
-            with:
-              hugo-version: 'latest'
+       uses: peaceiris/actions-hugo@v2
+       with:
+         hugo-version: 'latest'
 
           - name: Build
-            run: hugo --minify
+       run: hugo --minify
 
           - name: Deploy
-            uses: peaceiris/actions-gh-pages@v3
-            with:
-              personal_token: ${{ secrets.PERSONAL_TOKEN }}
-              external_repository: jhoodsmith/jhoodsmith.github.io
-              publish_branch: main
-              publish_dir: ./public
+       uses: peaceiris/actions-gh-pages@v3
+       with:
+         personal_token: ${{ secrets.PERSONAL_TOKEN }}
+         external_repository: jhoodsmith/jhoodsmith.github.io
+         publish_branch: main
+         publish_dir: ./public
     ```
 
 If all has gone well, then the blog should automatically be deployed to your
