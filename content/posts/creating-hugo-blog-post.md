@@ -197,25 +197,25 @@ instructions, I have added my custom CSS to `/static/css/custom.css`.
         runs-on: ubuntu-latest
         steps:
     ​      - uses: actions/checkout@v2
-	        with:
-              submodules: true
-              fetch-depth: 1
+       with:
+         submodules: true
+         fetch-depth: 1
 
           - name: Setup Hugo
-            uses: peaceiris/actions-hugo@v2
-            with:
-              hugo-version: 'latest'
+       uses: peaceiris/actions-hugo@v2
+       with:
+         hugo-version: 'latest'
 
           - name: Build
-            run: hugo --minify
+       run: hugo --minify
 
           - name: Deploy
-            uses: peaceiris/actions-gh-pages@v3
-            with:
-              personal_token: ${{ secrets.PERSONAL_TOKEN }}
-              external_repository: jhoodsmith/jhoodsmith.github.io
-              publish_branch: main
-              publish_dir: ./public
+       uses: peaceiris/actions-gh-pages@v3
+       with:
+         personal_token: ${{ secrets.PERSONAL_TOKEN }}
+         external_repository: jhoodsmith/jhoodsmith.github.io
+         publish_branch: main
+         publish_dir: ./public
     ```
 
 If all has gone well, then the blog should automatically be deployed to your

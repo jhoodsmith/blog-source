@@ -1,7 +1,6 @@
 +++
 title = "About"
 author = ["James Hood-Smith"]
-lastmod = 2021-02-07T17:50:38+00:00
 draft = false
 weight = 1001
 +++
