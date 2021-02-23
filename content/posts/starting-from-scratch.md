@@ -105,3 +105,48 @@ $ pip install -r requirements.txt
 ```
 
 Add an appropriate `.gitignore` file from <https://gitignore.io>
+
+
+## Ruby on Rails 6 {#ruby-on-rails-6}
+
+```shell
+$ rails new -d postgresql new-project
+```
+
+```ruby
+...
+group :development, :test do
+  ...
+  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'factory_bot_rails'
+  gem 'pry-byebug'
+  gem 'pry-doc'
+  gem 'rspec-rails'
+  gem 'rails-controller-testing'
+end
+
+group :development do
+  gem 'rubocop-rails'
+end
+
+gem 'devise'
+gem 'devise_invitable'
+gem 'tailwindcss-rails'
+```
+
+```shell
+$ yarn add @fortawesome/fontawesome-free
+```
+
+Add to `app/javascript/packs/application.js`
+
+```js
+import "@fortawesome/fontawesome-free/css/all"
+```
+
+```shell
+$ rails tailwindcss:install
+$ rails db:create
+$ rails g devise:install
+$ rails g devise_invitable User
+```

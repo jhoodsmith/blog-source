@@ -219,6 +219,7 @@ In =themes/jhs-tailwindtheme/assets/css/postcss.config.js=
 
   const purgecss = require('@fullhuman/postcss-purgecss')({
       // see https://gohugo.io/hugo-pipes/postprocess/#css-purging-with-postcss
+      // and https://github.com/dirkolbrich/hugo-theme-tailwindcss-starter
       content: [
 	  './hugo_stats.json',
 	  themeDir + '/hugo_stats.json'
@@ -242,6 +243,8 @@ In =themes/jhs-tailwindtheme/assets/css/postcss.config.js=
       ]
   }
 #+END_SRC
+
+#+RESULTS:
 
 In =themes/jhs-tailwindcss/assets/css/tailwind.config.js=
 #+BEGIN_SRC js
@@ -355,3 +358,45 @@ Install packages
 pip install -r requirements.txt
 #+END_SRC
 Add an appropriate =.gitignore= file from [[https://gitignore.io]]
+*** Ruby on Rails 6
+#+BEGIN_SRC shell
+  rails new -d postgresql new-project
+#+END_SRC
+
+#+BEGIN_SRC ruby
+  ...
+  group :development, :test do
+    ...
+    gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+    gem 'factory_bot_rails'
+    gem 'pry-byebug'
+    gem 'pry-doc'
+    gem 'rspec-rails'
+    gem 'rails-controller-testing'
+  end
+
+  group :development do
+    gem 'rubocop-rails'
+  end
+
+  gem 'devise'
+  gem 'devise_invitable'
+  gem 'tailwindcss-rails'
+#+END_SRC
+
+
+#+BEGIN_SRC shell
+  yarn add @fortawesome/fontawesome-free
+#+END_SRC
+
+Add to =app/javascript/packs/application.js=
+#+BEGIN_SRC js
+import "@fortawesome/fontawesome-free/css/all"
+#+END_SRC
+
+#+BEGIN_SRC shell
+  rails tailwindcss:install
+  rails db:create
+  rails g devise:install
+  rails g devise_invitable User
+#+END_SRC
