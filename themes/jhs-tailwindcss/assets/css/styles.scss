@@ -2,12 +2,7 @@
 @import "node_modules/tailwindcss/components";
 @import "node_modules/tailwindcss/utilities";
 
-@layer base {
-    footer {
-	@apply text-sm text-gray-500 py-8 text-center
-    }
 
-    h2 {
-	@apply text-2xl font-medium text-white mb-2
-    }
+pre {
+    background-color: #374151 !important;
 }

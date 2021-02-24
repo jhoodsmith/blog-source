@@ -28,7 +28,7 @@ automatic deployment using GitHub Actions.
 Like many dyed-in-the-wool Emacs users, I use [[https://orgmode.org][Org Mode]] for much of my writing. I
 want a blog that I can deploy and write posts for in Org with minimum fuss.
 Having heard good things about it, I want to give [[https://gohugo.io][Hugo]] a try. I also want to
-have automatic deployment with [[https://github.com/features/actions][GitHub Actions]].
+have automatic deployment with [[https://github.com/features/actions][GitHub Actions]]
 
 *** Steps
 **** Installation
@@ -199,6 +199,13 @@ instructions, I have added my custom CSS to =/static/css/custom.css=.
 If all has gone well, then the blog should automatically be deployed to your
 GitHub pages site each time you push to the =main= branch of =blog-source=.
 ** TODO Creating own theme using Tailwindcss
+:PROPERTIES:
+:EXPORT_FILE_NAME: custom-theme-with-tailwindcss
+:EXPORT_DATE: 2021-02-05
+:EXPORT_HUGO_CUSTOM_FRONT_MATTER: :toc true
+:END:
+
+*** Tailwindcss
 
 In blog source root
 #+BEGIN_SRC shell
@@ -275,6 +282,19 @@ In =themes/jhs-tailwind/layouts/partials/head.html=
   <link rel="stylesheet" href="{{ $styles.Permalink }}" integrity="{{ $styles.Data.Integrity }}">
 {{ end }}
 #+END_SRC
+
+*** Fontawesome
+
+#+BEGIN_SRC shell
+npm install --save @fortawesome/fontawesome-free
+#+END_SRC
+
+Add to =themes/jhs-tailwind/assets/js/index.js=
+#+BEGIN_SRC js
+  import '@fortawesome/fontawesome-free/js/fontawesome'
+  import '@fortawesome/fontawesome-free/js/solid'
+#+END_SRC
+
 
 * General                                            :@general:
 ** TODO Starting from scratch

@@ -18,7 +18,7 @@ toc = true
 Like many dyed-in-the-wool Emacs users, I use [Org Mode](https://orgmode.org) for much of my writing. I
 want a blog that I can deploy and write posts for in Org with minimum fuss.
 Having heard good things about it, I want to give [Hugo](https://gohugo.io) a try. I also want to
-have automatic deployment with [GitHub Actions](https://github.com/features/actions).
+have automatic deployment with [GitHub Actions](https://github.com/features/actions)
 
 
 ## Steps {#steps}

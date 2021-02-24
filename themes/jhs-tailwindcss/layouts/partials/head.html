@@ -21,6 +21,6 @@
   {{ $styles := $styles | minify | fingerprint | resources.PostProcess }}
   <link rel="stylesheet" href="{{ $styles.Permalink }}" integrity="{{ $styles.Data.Integrity }}">
   {{ end }}
-  {{- $scripts := resources.Get "js/app.js" | babel | minify | fingerprint }}
+  {{- $scripts := resources.Get "js/index.js" | js.Build | babel | minify | fingerprint }}
   <script type="text/javascript" src = '{{ $scripts.RelPermalink }}'></script>
 </head>
