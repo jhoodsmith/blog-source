@@ -1,26 +1,37 @@
 {
-  "name": "blog",
-  "version": "1.0.0",
-  "description": "My little corner of the web created using org-mode and Hugo.",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jhoodsmith/blog-source.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/jhoodsmith/blog-source/issues"
-  },
-  "homepage": "https://github.com/jhoodsmith/blog-source#readme",
-  "devDependencies": {
-    "autoprefixer": "^10.2.4",
-    "postcss": "^8.2.6",
-    "postcss-cli": "^8.3.1",
-    "postcss-import": "^14.0.0",
-    "tailwindcss": "^2.0.3"
-  }
+    "name": "blog",
+    "version": "1.0.0",
+    "description": "My little corner of the web created using org-mode and Hugo.",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "hugo --cleanDestinationDir",
+        "hugo-server": "hugo server --disableFastRender",
+        "webpack": "webpack"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/jhoodsmith/blog-source.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/jhoodsmith/blog-source/issues"
+    },
+    "homepage": "https://github.com/jhoodsmith/blog-source#readme",
+    "devDependencies": {
+        "@babel/cli": "^7.13.0",
+        "@babel/core": "^7.13.1",
+        "@babel/preset-env": "^7.13.5",
+        "autoprefixer": "^10.2.4",
+        "postcss": "^8.2.6",
+        "postcss-cli": "^8.3.1",
+        "postcss-import": "^14.0.0",
+        "tailwindcss": "^2.0.3",
+        "webpack": "^5.24.1",
+        "webpack-cli": "^4.5.0"
+    },
+    "dependencies": {
+        "@fortawesome/fontawesome-free": "^5.15.2"
+    }
 }
