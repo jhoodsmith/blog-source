@@ -6,22 +6,29 @@ module.exports = {
 		    css: {
 			color: '#9CA3AF',
 			code: {
-			    color: 'white',
+			    color: '#E5E7EB',
 			    backgroundColor: '#374151',
-			    padding: '4px',
-			    fontSize: '90%',
-			    borderRadius: '4px'
+			    borderRadius: '4px',
+			    padding: '2px 3px'
+			},
+			'code::before': {
+			    display: 'none'
+			},
+			'code::after': {
+			    display: 'none'
 			},
 			a: {
 			    color: '#FBBF24',
 			    textDecoration: 'none',
 			    '&:hover': {
-				color: '#2c5282',
+				color: '#FCD34D',
+				textDecoration: 'underline',
 			    },
 			},
 			h1: {color: 'white'},
 			h2: {color: 'white'},
 			h3: {color: 'white'},
+			h4: {color: 'white'},
 		    },
 		},
 	    }
