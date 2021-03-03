@@ -28,7 +28,7 @@ automatic deployment using GitHub Actions.
 Like many dyed-in-the-wool Emacs users, I use [[https://orgmode.org][Org Mode]] for much of my writing. I
 want a blog that I can deploy and write posts for in Org with minimum fuss.
 Having heard good things about it, I want to give [[https://gohugo.io][Hugo]] a try. I also want to
-have automatic deployment with [[https://github.com/features/actions][GitHub Actions]]
+have automatic deployment with [[https://github.com/features/actions][GitHub Actions]].
 
 *** Steps
 **** Installation
@@ -198,14 +198,21 @@ instructions, I have added my custom CSS to =/static/css/custom.css=.
 
 If all has gone well, then the blog should automatically be deployed to your
 GitHub pages site each time you push to the =main= branch of =blog-source=.
-** TODO Creating own theme using Tailwindcss
+** TODO Creating own theme using Tailwind CSS
 :PROPERTIES:
 :EXPORT_FILE_NAME: custom-theme-with-tailwindcss
 :EXPORT_DATE: 2021-02-05
 :EXPORT_HUGO_CUSTOM_FRONT_MATTER: :toc true
 :END:
 
-*** Tailwindcss
+#+begin_description
+In which I create a new Hugo theme using Tailwind CSS and Hugo Pipes and upgrade
+my GitHub actions workflow to use NPM.
+#+end_description
+
+*** Motivation
+In a [[Hugo blog with Org and GitHub Actions][previous post]]
+*** Install Tailwind CSS
 
 In blog source root
 #+BEGIN_SRC shell
@@ -295,7 +302,6 @@ Add to =themes/jhs-tailwind/assets/js/index.js=
   import '@fortawesome/fontawesome-free/js/solid'
 #+END_SRC
 
-
 * General                                            :@general:
 ** TODO Starting from scratch
 :PROPERTIES:
@@ -310,10 +316,9 @@ with.
 #+end_description
 
 *** Motiviation
-"How do I start this again?", I frequently ask myself when I start a new
-project. What are the external libraries I need? How do I setup the working
-environment? Even for small projects there are things they need to play nice with
-my [[https://github.com/jhoodsmith/.emacs.d][Emacs configuration]].
+"How do I start this again?" I often ask myself this when I start a new project.
+What are the external libraries I need? What tools do I need for test-driven
+development? How do I get things to play nice with my [[https://github.com/jhoodsmith/.emacs.d][Emacs configuration]].
 
 *** Ruby (non Rails)
 Create project directory

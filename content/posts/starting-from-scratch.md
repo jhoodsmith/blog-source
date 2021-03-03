@@ -14,10 +14,9 @@ toc = true
 
 ## Motiviation {#motiviation}
 
-"How do I start this again?", I frequently ask myself when I start a new
-project. What are the external libraries I need? How do I setup the working
-environment? Even for small projects there are things they need to play nice with
-my [Emacs configuration](https://github.com/jhoodsmith/.emacs.d).
+"How do I start this again?" I often ask myself this when I start a new project.
+What are the external libraries I need? What tools do I need for test-driven
+development? How do I get things to play nice with my [Emacs configuration](https://github.com/jhoodsmith/.emacs.d).
 
 
 ## Ruby (non Rails) {#ruby--non-rails}

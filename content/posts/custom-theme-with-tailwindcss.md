@@ -1,6 +1,10 @@
 +++
-title = "Creating own theme using Tailwindcss"
+title = "Creating own theme using Tailwind CSS"
 author = ["James Hood-Smith"]
+summary = """
+  In which I create a new Hugo theme using Tailwind CSS and Hugo Pipes and upgrade
+  my GitHub actions workflow to use NPM.
+  """
 date = 2021-02-05
 categories = ["blogging"]
 draft = true
@@ -8,7 +12,12 @@ weight = 2002
 toc = true
 +++
 
-## Tailwindcss {#tailwindcss}
+## Motivation {#motivation}
+
+In a [previous post]({{< relref "creating-hugo-blog-post" >}})
+
+
+## Install Tailwind CSS {#install-tailwind-css}
 
 In blog source root
 
