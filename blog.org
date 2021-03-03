@@ -9,9 +9,9 @@
 :EXPORT_FILE_NAME: about
 :EXPORT_HUGO_CUSTOM_FRONT_MATTER: :layout "about"
 :END:
-I am a computer scientist, software developer working in and around London.
-The intended audience for this blog is for the most part my future self, with the
-posts serving as reminders for how to get things done.
+I am a computer scientist and software developer working in and around London.
+The intended audience for this blog is for the most part my future self, with
+the posts serving as reminders for how to get things done.
 * Blogging                                           :@blogging:
 ** DONE Hugo blog with Org and GitHub Actions                      :hugo:org:
 :PROPERTIES:
@@ -431,7 +431,6 @@ jobs:
           publish_branch: main
           publish_dir: ./public
 #+END_SRC
-
 
 * General                                            :@general:
 ** TODO Starting from scratch
