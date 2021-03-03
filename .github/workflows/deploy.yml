@@ -17,6 +17,7 @@ jobs:
         uses: peaceiris/actions-hugo@v2
         with:
           hugo-version: 'latest'
+          extended: true
 
       - name: Setup Node
         uses: actions/setup-node@v1
@@ -31,9 +32,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - name: Build
-        run: npm ci
-        run: hugo --minify
+      - run: npm ci
+      - run: hugo --minify
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
