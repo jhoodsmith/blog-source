@@ -199,7 +199,7 @@ instructions, I have added my custom CSS to =/static/css/custom.css=.
 
 If all has gone well, then the blog should automatically be deployed to your
 GitHub pages site each time you push to the =main= branch of =blog-source=.
-** DONE Creating custom Hugo theme with Tailwind CSS
+** DONE Creating custom Hugo theme with Tailwind CSS   :hugo:org:tailwindcss:
 :PROPERTIES:
 :EXPORT_FILE_NAME: custom-theme-with-tailwindcss
 :EXPORT_DATE: 2021-02-20
@@ -433,7 +433,7 @@ jobs:
 #+END_SRC
 
 * General                                            :@general:
-** TODO Starting from scratch
+** DONE Starting from scratch
 :PROPERTIES:
 :EXPORT_FILE_NAME: starting-from-scratch
 :EXPORT_DATE: 2021-02-12
@@ -442,13 +442,13 @@ jobs:
 
 #+begin_description
 In which I describe the starter projects for the languages and frameworks I work
-with.
+with. These currently comprise Ruby (non Rails), Ruby on Rails, Python and Hugo
 #+end_description
 
 *** Motiviation
 "How do I start this again?" I often ask myself this when I start a new project.
 What are the external libraries I need? What tools do I need for test-driven
-development? How do I get things to play nice with my [[https://github.com/jhoodsmith/.emacs.d][Emacs configuration]].
+development? How do I get things to play nice with my [[https://github.com/jhoodsmith/.emacs.d][Emacs configuration]]?
 
 *** Ruby (non Rails)
 Create project directory
@@ -514,6 +514,8 @@ pip install -r requirements.txt
 #+END_SRC
 Add an appropriate =.gitignore= file from [[https://gitignore.io]]
 *** Ruby on Rails 6
+The assumption here is that there will be a [[https://www.postgresql.org][PostgreSQL]] database, and that [[https://github.com/heartcombo/devise][Devise]]
+will be used for authentication.
 #+BEGIN_SRC shell
   rails new -d postgresql new-project
 #+END_SRC
@@ -555,3 +557,9 @@ import "@fortawesome/fontawesome-free/css/all"
   rails g devise:install
   rails g devise_invitable User
 #+END_SRC
+
+*** Hugo
+#+BEGIN_SRC shell
+hugo new site new-project
+#+END_SRC
+Setup Tailwind CSS theme and JavaScript, as described in my [[Creating custom Hugo theme with Tailwind CSS][previous post]].

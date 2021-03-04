@@ -6,6 +6,7 @@ summary = """
   my GitHub Actions workflow to use NPM.
   """
 date = 2021-02-20
+tags = ["hugo", "org", "tailwindcss"]
 categories = ["blogging"]
 draft = false
 weight = 2002
@@ -250,4 +251,5 @@ jobs:
           external_repository: jhoodsmith/jhoodsmith.github.io
           publish_branch: main
           publish_dir: ./public
+
 ```

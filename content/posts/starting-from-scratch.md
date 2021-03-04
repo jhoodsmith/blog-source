@@ -3,11 +3,11 @@ title = "Starting from scratch"
 author = ["James Hood-Smith"]
 summary = """
   In which I describe the starter projects for the languages and frameworks I work
-  with.
+  with. These currently comprise Ruby (non Rails), Ruby on Rails, Python and Hugo
   """
-date = 2021-02-05
+date = 2021-02-12
 categories = ["general"]
-draft = true
+draft = false
 weight = 2001
 toc = true
 +++
@@ -16,7 +16,7 @@ toc = true
 
 "How do I start this again?" I often ask myself this when I start a new project.
 What are the external libraries I need? What tools do I need for test-driven
-development? How do I get things to play nice with my [Emacs configuration](https://github.com/jhoodsmith/.emacs.d).
+development? How do I get things to play nice with my [Emacs configuration](https://github.com/jhoodsmith/.emacs.d)?
 
 
 ## Ruby (non Rails) {#ruby--non-rails}
@@ -108,14 +108,17 @@ Add an appropriate `.gitignore` file from <https://gitignore.io>
 
 ## Ruby on Rails 6 {#ruby-on-rails-6}
 
+The assumption here is that there will be a [PostgreSQL](https://www.postgresql.org) database, and that [Devise](https://github.com/heartcombo/devise)
+will be used for authentication.
+
 ```shell
 $ rails new -d postgresql new-project
 ```
 
 ```ruby
-...
+# ...
 group :development, :test do
-  ...
+  # ...
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'factory_bot_rails'
   gem 'pry-byebug'
@@ -149,3 +152,12 @@ $ rails db:create
 $ rails g devise:install
 $ rails g devise_invitable User
 ```
+
+
+## Hugo {#hugo}
+
+```shell
+$ hugo new site new-project
+```
+
+Setup Tailwind CSS theme and JavaScript, as described in my [previous post]({{< relref "custom-theme-with-tailwindcss" >}}).

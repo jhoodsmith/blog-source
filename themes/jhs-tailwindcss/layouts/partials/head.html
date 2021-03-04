@@ -6,14 +6,25 @@
     {{- .Title }} - {{ .Site.Title -}}
     {{ end }}
   </title>
-  {{- if .Description }}
-  <meta name="description" content="{{ .Description }}" />
+
+  <meta name="description" content="{{ .Summary }}" />
+  {{ range .Params.categories }}
+  <meta name="subject" content="{{ . }}">
+  {{ end }}
+  
+  {{- if .Params.tags }}
+  <meta name="keywords" content="{{ delimit .Params.tags "," }}" />
   {{ end -}}
-  {{- if .Keywords }}
-  <meta name="keywords" content="{{ delimit .Keywords "," }}" />
-  {{ end -}}
+
   <meta name="author" content="{{ .Site.Params.author }}" />
 
+  <meta name="robots" content="index,follow"><!-- All Search Engines -->
+  <meta name="googlebot" content="index,follow"><!-- Google Specific -->
+
+  <meta name="google" content="nositelinkssearchbox">
+
+  <meta name="google-site-verification" content="aowWupsxj1lvaIv7Wt_uVh7Z__T-wgVCvimzs9S2BOE" />
+  
   {{ $styles := resources.Get "css/styles.scss" | toCSS | postCSS (dict "config" "./assets/css/postcss.config.js") }}
   {{ if .Site.IsServer }}
   <link rel="stylesheet" href="{{ $styles.RelPermalink }}">
