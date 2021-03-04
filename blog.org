@@ -481,7 +481,7 @@ Assuming [[https://github.com/pyenv/pyenv][pyenv]] is installed, remind yourself
 #+BEGIN_SRC shell
 pyenv versions
 #+END_SRC
-Create a new virtual environemnt for the your chosen python version
+Create a new virtual environment for the your chosen python version
 #+BEGIN_SRC shell
 pyenv virtualenv 3.7.5 new-project-name
 #+END_SRC

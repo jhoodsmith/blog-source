@@ -62,7 +62,7 @@ Assuming [pyenv](https://github.com/pyenv/pyenv) is installed, remind yourself o
 $ pyenv versions
 ```
 
-Create a new virtual environemnt for the your chosen python version
+Create a new virtual environment for the your chosen python version
 
 ```shell
 $ pyenv virtualenv 3.7.5 new-project-name
