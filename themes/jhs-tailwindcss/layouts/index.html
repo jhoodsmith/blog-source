@@ -3,7 +3,7 @@
 <main class="container px-2 py-6 mx-auto flex-1 max-w-screen-lg">
   <h1 class="font-medium text-4xl text-white text-center mb-6">Aides-Mémoire</h1>
   <div class="divide-y-2 divide-gray-800">
-  {{ range $pag.Pages }}
+  {{ range $pag.Pages.ByDate.Reverse }}
   <section class="py-8 flex flex-wrap md:flex-nowrap">
     <div class="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
       <span class="font-semibold text-white uppercase">
