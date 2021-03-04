@@ -5,7 +5,7 @@ summary = """
   In which I describe the starter projects for the languages and frameworks I work
   with. These currently comprise Ruby (non Rails), Ruby on Rails, Python and Hugo
   """
-date = 2021-02-12
+date = 2021-02-25
 categories = ["general"]
 draft = false
 weight = 2001

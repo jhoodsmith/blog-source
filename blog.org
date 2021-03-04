@@ -436,7 +436,7 @@ jobs:
 ** DONE Starting from scratch
 :PROPERTIES:
 :EXPORT_FILE_NAME: starting-from-scratch
-:EXPORT_DATE: 2021-02-12
+:EXPORT_DATE: 2021-02-25
 :EXPORT_HUGO_CUSTOM_FRONT_MATTER: :toc true
 :END:
 
