@@ -32,11 +32,15 @@ $ npm init
 $ npm install --save-dev autoprefixer postcss postcss-cli postcss-import tailwindcss
 ```
 
-Next, edit `config.toml` to set the site's theme to be the one just created.
+Next, edit `config.toml` to set the site's theme to be the one just created and
+set it up for working with CSS post processing.
 
 ```toml
 # ...
 theme = "jhs-tailwindcss"
+# ...
+[build]
+  writeStats = true
 ```
 
 I will use Hugo Pipes to process the CSS files with [PostCSS](https://postcss.org). The configuration
@@ -251,5 +255,4 @@ jobs:
           external_repository: jhoodsmith/jhoodsmith.github.io
           publish_branch: main
           publish_dir: ./public
-
 ```
