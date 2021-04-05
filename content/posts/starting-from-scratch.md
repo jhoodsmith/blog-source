@@ -88,6 +88,8 @@ Specifiy development dependencies in `requirements.txt`
 ipython
 jedi
 pytest
+flake8
+python-language-server
 
 ###### Frequently used ######
 numpy
@@ -160,4 +162,75 @@ $ rails g devise_invitable User
 $ hugo new site new-project
 ```
 
-Setup Tailwind CSS theme and JavaScript, as described in my [previous post]({{< relref "custom-theme-with-tailwindcss" >}}).
+From within project directory
+
+```shell
+$ npm init
+$ npm install --save-dev autoprefixer postcss postcss-cli postcss-import tailwindcss
+```
+
+In `/assets/css/postcss.config.js`
+
+```js
+const purgecss = require('@fullhuman/postcss-purgecss')({
+    content: [ './hugo_stats.json' ],
+    defaultExtractor: (content) => {
+      let els = JSON.parse(content).htmlElements;
+      return els.tags.concat(els.classes, els.ids);
+    }
+});
+
+module.exports = {
+    plugins: [
+      require('postcss-import')({
+	  path: ["assets/css"]
+      }),
+      require('tailwindcss')('assets/css/tailwind.config.js'),
+      require('autoprefixer'),
+      ...(process.env.HUGO_ENVIRONMENT === 'production' ? [ purgecss ] : [])
+    ]
+};
+```
+
+In `/assets/css/main.scss`
+
+```scss
+@import "node_modules/tailwindcss/base";
+@import "node_modules/tailwindcss/components";
+@import "node_modules/tailwindcss/utilities";
+```
+
+```shell
+$ npx tailwindcss init
+$ mv tailwind.config.js assets/css
+```
+
+In `/layouts/_defaults/baseof.html`:
+
+```html
+{{ $styles := resources.Get "css/main.scss" | toCSS | postCSS (dict "config" "./assets/css/postcss.config.js") }}
+{{ if .Site.IsServer }}
+<link rel="stylesheet" href="{{ $styles.RelPermalink }}">
+{{ else }}
+{{ $styles := $styles | minify | fingerprint | resources.PostProcess  }}
+<link rel="stylesheet" href="{{ $styles.Permalink }}" integrity="{{ $styles.Data.Integrity }}">
+{{ end }}
+```
+
+```shell
+$ npm install --save @fortawesome/fontawesome-free
+```
+
+Then add the following to `/assets/js/index.js`
+
+```js
+import '@fortawesome/fontawesome-free/js/fontawesome'
+import '@fortawesome/fontawesome-free/js/solid'
+```
+
+Again, where you inserted the Hugo Pipe work on css:
+
+```html
+{{- $scripts := resources.Get "js/index.js" | js.Build | minify | fingerprint }}
+<script type="text/javascript" src = '{{ $scripts.RelPermalink }}'></script>
+```

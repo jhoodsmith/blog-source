@@ -506,6 +506,8 @@ Specifiy development dependencies in =requirements.txt=
 ipython
 jedi
 pytest
+flake8
+python-language-server
 
 ###### Frequently used ######
 numpy
@@ -568,4 +570,70 @@ import "@fortawesome/fontawesome-free/css/all"
 #+BEGIN_SRC shell
 hugo new site new-project
 #+END_SRC
-Setup Tailwind CSS theme and JavaScript, as described in my [[Creating custom Hugo theme with Tailwind CSS][previous post]].
+From within project directory
+#+BEGIN_SRC shell
+npm init
+npm install --save-dev autoprefixer postcss postcss-cli postcss-import tailwindcss
+#+END_SRC
+In =/assets/css/postcss.config.js=
+#+BEGIN_SRC js
+  const purgecss = require('@fullhuman/postcss-purgecss')({
+      content: [ './hugo_stats.json' ],
+      defaultExtractor: (content) => {
+	  let els = JSON.parse(content).htmlElements;
+	  return els.tags.concat(els.classes, els.ids);
+      }
+  });
+
+  module.exports = {
+      plugins: [
+	  require('postcss-import')({
+	      path: ["assets/css"]
+	  }),
+	  require('tailwindcss')('assets/css/tailwind.config.js'),
+	  require('autoprefixer'),
+	  ...(process.env.HUGO_ENVIRONMENT === 'production' ? [ purgecss ] : [])
+      ]
+  };
+#+END_SRC
+
+In =/assets/css/main.scss=
+#+BEGIN_SRC scss
+  @import "node_modules/tailwindcss/base";
+  @import "node_modules/tailwindcss/components";
+  @import "node_modules/tailwindcss/utilities";
+#+END_SRC
+
+
+#+BEGIN_SRC shell
+npx tailwindcss init
+mv tailwind.config.js assets/css
+#+END_SRC
+
+In =/layouts/_defaults/baseof.html=:
+#+BEGIN_SRC html
+  {{ $styles := resources.Get "css/main.scss" | toCSS | postCSS (dict "config" "./assets/css/postcss.config.js") }}
+  {{ if .Site.IsServer }}
+  <link rel="stylesheet" href="{{ $styles.RelPermalink }}">
+  {{ else }}
+  {{ $styles := $styles | minify | fingerprint | resources.PostProcess  }}
+  <link rel="stylesheet" href="{{ $styles.Permalink }}" integrity="{{ $styles.Data.Integrity }}">
+  {{ end }}
+#+END_SRC
+
+#+BEGIN_SRC shell
+  npm install --save @fortawesome/fontawesome-free
+#+END_SRC
+
+Then add the following to =/assets/js/index.js=
+#+BEGIN_SRC js
+import '@fortawesome/fontawesome-free/js/fontawesome'
+import '@fortawesome/fontawesome-free/js/solid'
+#+END_SRC
+
+Again, where you inserted the Hugo Pipe work on css:
+
+#+BEGIN_SRC html
+{{- $scripts := resources.Get "js/index.js" | js.Build | minify | fingerprint }}
+<script type="text/javascript" src = '{{ $scripts.RelPermalink }}'></script>
+#+END_SRC
