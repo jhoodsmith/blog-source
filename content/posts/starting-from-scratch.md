@@ -200,25 +200,24 @@ In `/assets/css/main.scss`
 @import "node_modules/tailwindcss/utilities";
 ```
 
+In `/config.toml`
+
+```toml
+baseURL = "https://www.example.co.uk"
+languageCode = "en-gb"
+title = "New Web Site"
+
+[build]
+  writeStats = true
+```
+
 ```shell
 $ npx tailwindcss init
 $ mv tailwind.config.js assets/css
 ```
 
-In `/layouts/_defaults/baseof.html`:
-
-```html
-{{ $styles := resources.Get "css/main.scss" | toCSS | postCSS (dict "config" "./assets/css/postcss.config.js") }}
-{{ if .Site.IsServer }}
-<link rel="stylesheet" href="{{ $styles.RelPermalink }}">
-{{ else }}
-{{ $styles := $styles | minify | fingerprint | resources.PostProcess  }}
-<link rel="stylesheet" href="{{ $styles.Permalink }}" integrity="{{ $styles.Data.Integrity }}">
-{{ end }}
-```
-
 ```shell
-$ npm install --save @fortawesome/fontawesome-free
+$ npm install --save @fortawesome/fontawesome-free alpinejs
 ```
 
 Then add the following to `/assets/js/index.js`
@@ -226,11 +225,61 @@ Then add the following to `/assets/js/index.js`
 ```js
 import '@fortawesome/fontawesome-free/js/fontawesome'
 import '@fortawesome/fontawesome-free/js/solid'
+
+import 'alpinejs'
 ```
 
-Again, where you inserted the Hugo Pipe work on css:
+In `/layouts/_default/baseof.html`:
 
 ```html
-{{- $scripts := resources.Get "js/index.js" | js.Build | minify | fingerprint }}
-<script type="text/javascript" src = '{{ $scripts.RelPermalink }}'></script>
+<!DOCTYPE html>
+<html lang="en-gb">
+  {{- partial "head.html" . -}}
+  <body>
+    {{- partial "header.html" . -}}
+    {{- block "main" . }}{{- end }}
+    {{- partial "footer.html" . -}}
+  </body>
+</html>
+```
+
+In `/layouts/partials/head.html`:
+
+```html
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{ .Site.Title -}}</title>
+
+  <meta name="description" content="">
+  <meta name="robots" content="index,follow">
+  <meta name="googlebot" content="index,follow">
+  <meta name="google" content="nositelinkssearchbox">
+
+  {{ $styles := resources.Get "css/main.scss" | toCSS | postCSS (dict "config" "./assets/css/postcss.config.js") }}
+  {{ if .Site.IsServer }}
+  <link rel="stylesheet" href="{{ $styles.RelPermalink }}">
+  {{ else }}
+  {{ $styles := $styles | minify | fingerprint | resources.PostProcess  }}
+  <link rel="stylesheet" href="{{ $styles.RelPermalink }}">
+  {{ end }}
+
+  {{- $scripts := resources.Get "js/index.js" | js.Build | minify | fingerprint }}
+  <script type="text/javascript" src ="{{ $scripts.RelPermalink }}"></script>
+</head>
+```
+
+Create blank `/layouts/index.html`
+
+```html
+{{ define "main" }}
+Hello World
+{{ end }}
+```
+
+Finally, create empty header and footer
+
+```shell
+$ touch layouts/partials/footer.html
+$ touch layouts/partials/header.html
 ```
