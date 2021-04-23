@@ -38,10 +38,13 @@ Specify dependencies in a `Gemfile`
 
 ```ruby
 source 'https://rubygems.org'
-gem 'pry'
-gem 'pry-doc'
-gem 'rspec'
-gem 'rubocop', require: false
+group :development do
+  gem 'pry'
+  gem 'pry-doc'
+  gem 'rspec'
+  gem 'rubocop'
+  gem 'solargraph'
+end
 ```
 
 Install and initialise [RSpec](https://rspec.info)
@@ -119,12 +122,12 @@ $ rails new -d postgresql new-project
 # ...
 group :development, :test do
   # ...
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'factory_bot_rails'
   gem 'pry-byebug'
   gem 'pry-doc'
   gem 'rspec-rails'
   gem 'rails-controller-testing'
+  gem 'solargraph'
 end
 
 group :development do

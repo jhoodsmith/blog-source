@@ -469,11 +469,14 @@ gem install bundler
 #+END_SRC
 Specify dependencies in a =Gemfile=
 #+BEGIN_SRC ruby
-source 'https://rubygems.org'
-gem 'pry'
-gem 'pry-doc'
-gem 'rspec'
-gem 'rubocop', require: false
+  source 'https://rubygems.org'
+  group :development do
+    gem 'pry'
+    gem 'pry-doc'
+    gem 'rspec'
+    gem 'rubocop'
+    gem 'solargraph'
+  end
 #+END_SRC
 Install and initialise [[https://rspec.info][RSpec]]
 #+BEGIN_SRC shell
@@ -530,12 +533,12 @@ will be used for authentication.
   # ...
   group :development, :test do
     # ...
-    gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
     gem 'factory_bot_rails'
     gem 'pry-byebug'
     gem 'pry-doc'
     gem 'rspec-rails'
     gem 'rails-controller-testing'
+    gem 'solargraph'
   end
 
   group :development do
