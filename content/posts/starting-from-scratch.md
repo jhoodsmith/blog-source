@@ -86,10 +86,8 @@ Specifiy development dependencies in `requirements.txt`
 ```text
 ###### Working environment ######
 ipython
-jedi
 pytest
-flake8
-python-language-server
+python-language-server[all]
 
 ###### Frequently used ######
 numpy
