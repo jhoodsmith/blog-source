@@ -5,7 +5,7 @@ summary = """
   In which I describe the starter projects for the languages and frameworks I work
   with. These currently comprise Ruby (non Rails), Ruby on Rails, Python and Hugo
   """
-date = 2021-02-25
+date = 2021-05-15
 categories = ["general"]
 draft = false
 weight = 2001
@@ -154,6 +154,13 @@ $ rails tailwindcss:install
 $ rails db:create
 $ rails g devise:install
 $ rails g devise_invitable User
+$ rails g devise:views
+```
+
+To make Devise happy add the following to `config/environments/development.rb`
+
+```ruby
+config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 ```
 
 
@@ -209,7 +216,7 @@ languageCode = "en-gb"
 title = "New Web Site"
 
 [build]
-  writeStats = true
+writeStats = true
 ```
 
 ```shell
