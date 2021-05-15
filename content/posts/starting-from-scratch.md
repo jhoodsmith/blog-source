@@ -155,6 +155,7 @@ $ rails db:create
 $ rails g devise:install
 $ rails g devise_invitable User
 $ rails g devise:views
+$ rails g rspec:install
 ```
 
 To make Devise happy add the following to `config/environments/development.rb`
