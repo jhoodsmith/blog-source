@@ -19,47 +19,63 @@ What are the external libraries I need? What tools do I need for test-driven
 development? How do I get things to play nice with my [Emacs configuration](https://github.com/jhoodsmith/.emacs.d)?
 
 
-## Ruby (non Rails) {#ruby--non-rails}
+## Ruby GEM with simple CLI (non Rails) {#ruby-gem-with-simple-cli--non-rails}
+
+Create directory structure
+
+```shell
+$ bundler gem --exe --test=rspec --ci=github my_app
+```
+
+This will create a new directory called `my_app` containing a skeleton directory
+structure for a new project.
+
+Next you will need to update the `.gemspec` file located in the root of the
+directory. It is especially important to update any field whose value starts
+with "TODO", otherwise the Gem will not build.
+
+Add `pry` and `pry-byebug` to `Gemfile` and uncomment the two lines in
+`/bin/console` that refer to Pry.
+
+
+## Simple Ruby program (not a Gem) {#simple-ruby-program--not-a-gem}
 
 Create project directory
 
 ```shell
 $ mkdir new-project-name
 $ cd new-project-name
+$ mkdir lib
 ```
 
-Install [Bundler](https://bundler.io)
-
-```shell
-$ gem install bundler
-```
-
-Specify dependencies in a `Gemfile`
+Initialise `Gemfile` with RSpec
 
 ```ruby
 source 'https://rubygems.org'
-group :development do
-  gem 'pry'
-  gem 'pry-doc'
-  gem 'rspec'
-  gem 'rubocop'
-  gem 'solargraph'
-end
+
+gem 'rspec'
 ```
 
-Install and initialise [RSpec](https://rspec.info)
+Next run `bundle` with added bin directory
 
 ```shell
-$ bundle install
-$ rspec --init
+$ gem bundle install --binstubs
 ```
 
-Add an appropriate `.gitignore` file from <https://gitignore.io>
+And setup RSpec
+
+```shell
+$ bin/rpsec --init
+```
+
+Add library files to `lib`, as this is automatically added to the Ruby
+`LOAD_PATH` when running RSpec.
 
 
 ## Python {#python}
 
-Assuming [pyenv](https://github.com/pyenv/pyenv) is installed, remind yourself of what versions are available on the local system
+Assuming [pyenv](https://github.com/pyenv/pyenv) is installed, remind yourself of what versions are available on
+the local system
 
 ```shell
 $ pyenv versions
