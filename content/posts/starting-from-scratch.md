@@ -68,7 +68,7 @@ And setup RSpec
 $ bin/rpsec --init
 ```
 
-Add library files to `lib`, as this is automatically added to the Ruby
+Create your files in `lib`, as this directory is automatically added to the Ruby
 `LOAD_PATH` when running RSpec.
 
 
