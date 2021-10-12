@@ -29,7 +29,7 @@ template and install the relevant npm packages.
 ```shell
 $ hugo new theme jhs-tailwindcss
 $ npm init
-$ npm install --save-dev autoprefixer postcss postcss-cli postcss-import tailwindcss
+$ npm install --save-dev autoprefixer postcss postcss-cli postcss-import tailwindcss @fullhuman/postcss-purgecss
 ```
 
 Next, edit `config.toml` to set the site's theme to be the one just created and
