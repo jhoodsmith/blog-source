@@ -98,7 +98,7 @@ have automatic deployment with [[https://github.com/features/actions][GitHub Act
 
    To ensure things are working well run the Hugo development server
    #+BEGIN_SRC shell
-     hugo server -D --navigateToChange
+     hugo server -D --navigateToChanged
    #+END_SRC
    View the blog at =http://localhost:1313=.
 **** Making change to theme
