@@ -187,9 +187,11 @@ config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 $ hugo new site new-project
 ```
 
-From within project directory
+I'll assume we are using PostCSS as our preprocessor. In this case, we need to
+execute the following from within project directory.
 
 ```shell
+$ # this can be skipped if we are not using tailwindcss
 $ npm init
 $ npm install --save-dev autoprefixer postcss postcss-cli postcss-import tailwindcss
 ```

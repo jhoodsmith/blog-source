@@ -594,8 +594,10 @@ To make Devise happy add the following to =config/environments/development.rb=
 #+BEGIN_SRC shell
   hugo new site new-project
 #+END_SRC
-From within project directory
+I'll assume we are using PostCSS as our preprocessor. In this case, we need to
+execute the following from within project directory.
 #+BEGIN_SRC shell
+  # this can be skipped if we are not using tailwindcss
   npm init
   npm install --save-dev autoprefixer postcss postcss-cli postcss-import tailwindcss
 #+END_SRC
